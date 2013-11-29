@@ -30,6 +30,91 @@ void main() {
     members = Reflection.typeGetMembers(type, flags: BindingFlags.STATIC);
     printMembers("Static members", members);
   }
+
+  print("=========================");
+  print("New instances");
+  var foo = Reflection.typeNewInstance(Foo);
+  var zero = Reflection.typeNewInstance(String, #fromCharCode, [48]);
+  print("zero is $zero");
+
+  print("=========================");
+  var type1 = new TypeOf<Foo<int>>().type;
+  var type2 = new TypeOf<Animal>().type;
+  var instance = Reflection.typeNewInstance(type1);
+  var result = instance is Animal;
+  //printIs(type1, type2, result);
+
+  type1 = new TypeOf<FooMixedAnimal<FooMixedAnimal>>().type;
+  type2 = new TypeOf<Foo<Foo>>().type;
+  instance = Reflection.typeNewInstance(type1);
+  result = instance is Foo<Foo>;
+  printIs(type1, type2, result);
+
+  type1 = new TypeOf<FooMixedAnimal<FooMixedAnimal<FooMixedAnimal>>>().type;
+  type2 = new TypeOf<Foo<Foo<Foo>>>().type;
+  instance = Reflection.typeNewInstance(type1);
+  result = instance is Foo<Foo<Foo>>;
+  printIs(type1, type2, result);
+
+  type1 = new TypeOf<Foo>().type;
+  type2 = new TypeOf<Animal>().type;
+  instance = Reflection.typeNewInstance(type1);
+  result = instance is Animal;
+  printIs(type1, type2, result);
+
+  type1 = new TypeOf<Foo<int>>().type;
+  type2 = new TypeOf<Foo<Object>>().type;
+  instance = Reflection.typeNewInstance(type1);
+  result = instance is Foo<Object>;
+  printIs(type1, type2, result);
+
+  type1 = new TypeOf<Foo<Object>>().type;
+  type2 = new TypeOf<Foo<int>>().type;
+  instance = Reflection.typeNewInstance(type1);
+  result = instance is Foo<int>;
+  printIs(type1, type2, result);
+
+  type1 = new TypeOf<FooMixedAnimal<List<int>>>().type;
+  type2 = new TypeOf<FooMixedAnimal<Iterable<Object>>>().type;
+  instance = Reflection.typeNewInstance(type1);
+  result = instance is FooMixedAnimal<Iterable<Object>>;
+  printIs(type1, type2, result);
+
+  type1 = new TypeOf<FooMixedAnimal<FooMixedAnimal<int>>>().type;
+  type2 = new TypeOf<FooMixedAnimal<FooMixedAnimal<Object>>>().type;
+  instance = Reflection.typeNewInstance(type1);
+  result = instance is FooMixedAnimal<FooMixedAnimal<Object>>;
+  printIs(type1, type2, result);
+
+  type1 = new TypeOf<FooMixedAnimal<FooMixedAnimal<Foo>>>().type;
+  type2 = new TypeOf<FooMixedAnimal<FooMixedAnimal<Animal>>>().type;
+  instance = Reflection.typeNewInstance(type1);
+  result = instance is FooMixedAnimal<FooMixedAnimal<Animal>>;
+  printIs(type1, type2, result);
+
+  type1 = new TypeOf<FooMixedAnimal<FooMixedAnimal<Foo<int>>>>().type;
+  type2 = new TypeOf<FooMixedAnimal<FooMixedAnimal<Animal>>>().type;
+  instance = Reflection.typeNewInstance(type1);
+  result = instance is FooMixedAnimal<FooMixedAnimal<Animal>>;
+  printIs(type1, type2, result);
+
+  type1 = new TypeOf<FooMixedAnimal<FooMixedAnimal<FooMixedAnimal<int>>>>().type;
+  type2 = new TypeOf<Foo<FooMixedAnimal<Foo<Object>>>>().type;
+  instance = Reflection.typeNewInstance(type1);
+  result = instance is FooMixedAnimal<FooMixedAnimal<Animal>>;
+  printIs(type1, type2, result);
+
+  type1 = new TypeOf<Foo_T_Extends_Foo>().type;
+  type2 = new TypeOf<Foo>().type;
+  instance = Reflection.typeNewInstance(type1);
+  result = instance is Foo;
+  printIs(type1, type2, result);
+
+  type1 = new TypeOf<Foo_T_Extends_Foo_T>().type;
+  type2 = new TypeOf<Foo>().type;
+  instance = Reflection.typeNewInstance(type1);
+  result = instance is Foo;
+  printIs(type1, type2, result);
 }
 
 void printMembers(String title, Map declarations) {
@@ -39,7 +124,16 @@ void printMembers(String title, Map declarations) {
     var name = Reflection.symbolToString(declaration.simpleName);
     print("  $name");
   }
+}
 
+void printIs(Type type, Type other, bool mustBe) {
+  var isSubtype = Reflection.typeIs(type, other);
+  var message = "${type} is ${other}: $isSubtype";
+  if(isSubtype != mustBe) {
+    throw new StateError("$message, must be $mustBe");
+  }
+
+  print(message);
 }
 
 class Animal {
@@ -60,4 +154,23 @@ class Zebra extends Animal {
   Zebra();
 
   Zebra._internal() {}
+}
+
+class TypeOf<T> {
+  Type get type => T;
+}
+
+class Foo<T> extends Object {
+}
+
+class Foo_T_Extends_Foo<T> extends Foo {
+}
+
+class Foo_T_Extends_Foo_T<T> extends Foo<T> {
+}
+
+class FooMixedAnimal<T> extends Foo with Mixin<T>, Animal {
+}
+
+class Mixin<T> {
 }

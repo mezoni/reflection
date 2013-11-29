@@ -186,6 +186,10 @@ class Reflection {
     return typeGetMembers(type, flags: flags, inherited : inherited, members: MemberTypes.VARIABLE);
   }
 
+  static bool typeIs(Type type, Type other) {
+    return typeMirrorIs(typeGetTypeMirror(type), typeGetTypeMirror(other));
+  }
+
   static Type typeMirrorGetType(TypeMirror typeMirror) {
     if(typeMirror == null) {
       return null;
@@ -202,5 +206,110 @@ class Reflection {
     }
 
     return null;
+  }
+
+  static bool typeMirrorIs(TypeMirror type, TypeMirror other) {
+    return _typeMirrorIs(type, other);
+  }
+
+  static Object typeNewInstance(Type type, [Symbol constructorName, List positionalArguments, Map<Symbol,dynamic> namedArguments]) {
+    if(type == null) {
+      throw new ArgumentError("type: $type");
+    }
+
+    var typeMirror = typeGetTypeMirror(type);
+    if(typeMirror is ClassMirror) {
+      if(constructorName == null) {
+        constructorName = const Symbol("");
+      }
+
+      if(positionalArguments == null) {
+        positionalArguments = [];
+      }
+
+      var instance = typeMirror.newInstance(constructorName, positionalArguments, namedArguments);
+      if(instance.hasReflectee) {
+        return instance.reflectee;
+      }
+
+      return null;
+    }
+
+    throw new StateError("'$type' is not a class");
+  }
+
+  static bool _typeMirrorIs(TypeMirror type, TypeMirror other, {bool otherIsGeneric, _Variance variance : _Variance.COVARIANCE}) {
+    if(type == other) {
+      return true;
+    } else if(variance == _Variance.INVARIANCE) {
+      return false;
+    } else if(other is! ClassMirror) {
+      if(other == mirrorSystem.dynamicType) {
+        return true;
+      }
+
+      return false;
+    } else if(type is! ClassMirror) {
+      return false;
+    }
+
+    ClassMirror typeClass = type;
+    ClassMirror otherClass = other;
+    var typeIsGeneric = typeClass.typeVariables.length > 0;
+    if(otherIsGeneric == null) {
+      otherIsGeneric = otherClass.typeVariables.length > 0;
+    }
+
+    if(!typeIsGeneric && otherIsGeneric) {
+      return false;
+    }
+
+    var typeOriginal = typeClass.originalDeclaration;
+    var otherOriginal = otherClass.originalDeclaration;
+    if(typeIsGeneric && otherIsGeneric) {
+      if(typeOriginal != otherOriginal) {
+        if(!_typeMirrorIs(typeClass, other, otherIsGeneric: false)) {
+          return false;
+        }
+      }
+
+      var typeArguments = typeClass.typeArguments;
+      var otherArguments = otherClass.typeArguments;
+      var length = typeArguments.length;
+      if(length != otherArguments.length) {
+        return false;
+      }
+
+      for(var i = 0; i < length; i++) {
+        var typeVariable = typeArguments[i];
+        var otherVariable = otherArguments[i];
+        if(!_typeMirrorIs(typeVariable, otherVariable)) {
+          return false;
+        }
+      }
+
+      return true;
+    }
+
+    if(typeOriginal == otherOriginal) {
+      return true;
+    }
+
+    var typeSuperinterfaces = typeClass.superinterfaces;
+    var otherSuperinterfaces = otherClass.superinterfaces;
+    var length = typeSuperinterfaces.length;
+    for(var i = 0; i < length; i++) {
+      var typeSuperinterface = typeSuperinterfaces[i];
+      if(_typeMirrorIs(typeSuperinterface, other, otherIsGeneric: false)) {
+        return true;
+      }
+    }
+
+    var typeSuperclass = typeClass.superclass;
+    if(typeSuperclass == null) {
+      return false;
+    }
+
+    return _typeMirrorIs(typeSuperclass, other, otherIsGeneric: false);
   }
 }
