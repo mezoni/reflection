@@ -42,7 +42,7 @@ void main() {
   var type2 = new TypeOf<Animal>().type;
   var instance = Reflection.typeNewInstance(type1);
   var result = instance is Animal;
-  //printIs(type1, type2, result);
+  printIs(type1, type2, result);
 
   type1 = new TypeOf<FooMixedAnimal<FooMixedAnimal>>().type;
   type2 = new TypeOf<Foo<Foo>>().type;

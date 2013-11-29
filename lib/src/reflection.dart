@@ -241,8 +241,6 @@ class Reflection {
   static bool _typeMirrorIs(TypeMirror type, TypeMirror other, {bool otherIsGeneric, _Variance variance : _Variance.COVARIANCE}) {
     if(type == other) {
       return true;
-    } else if(variance == _Variance.INVARIANCE) {
-      return false;
     } else if(other is! ClassMirror) {
       if(other == mirrorSystem.dynamicType) {
         return true;
@@ -296,7 +294,6 @@ class Reflection {
     }
 
     var typeSuperinterfaces = typeClass.superinterfaces;
-    var otherSuperinterfaces = otherClass.superinterfaces;
     var length = typeSuperinterfaces.length;
     for(var i = 0; i < length; i++) {
       var typeSuperinterface = typeSuperinterfaces[i];
