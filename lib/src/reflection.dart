@@ -3,6 +3,208 @@ part of reflection;
 class Reflection {
   static final mirrorSystem = currentMirrorSystem();
 
+  static DeclarationMirror getAccessor(DeclarationMirror declarationMirror, Symbol name, {int flags : BindingFlags.ALL, bool inherited : true}) {
+    if(name == null) {
+      throw new ArgumentError("name: $name");
+    }
+
+    return getAccessors(declarationMirror, flags : flags, inherited : inherited)[name];
+  }
+
+  static Map<Symbol, DeclarationMirror> getAccessors(DeclarationMirror declarationMirror, {int flags : BindingFlags.ALL, bool inherited : true}) {
+    if(flags == null) {
+      throw new ArgumentError("bindingFlags: $flags");
+    }
+
+    return getMembers(declarationMirror, flags : flags, inherited : inherited, members : MemberTypes.ACCESSOR);
+  }
+
+  static DeclarationMirror getClass(DeclarationMirror declarationMirror, Symbol name, {int flags : BindingFlags.ALL, bool inherited : true}) {
+    if(name == null) {
+      throw new ArgumentError("name: $name");
+    }
+
+    return getClasses(declarationMirror, flags : flags, inherited : inherited)[name];
+  }
+
+  static Map<Symbol, DeclarationMirror> getClasses(DeclarationMirror declarationMirror, {int flags : BindingFlags.ALL, bool inherited : true}) {
+    return getMembers(declarationMirror, flags: flags, inherited : inherited, members: MemberTypes.CLASS);
+  }
+
+  static DeclarationMirror getContructor(DeclarationMirror declarationMirror, Symbol name, {int flags : BindingFlags.ALL, bool inherited : true}) {
+    if(name == null) {
+      throw new ArgumentError("name: $name");
+    }
+
+    return getContructors(declarationMirror, flags : flags, inherited : inherited)[name];
+  }
+
+  static Map<Symbol, DeclarationMirror> getContructors(DeclarationMirror declarationMirror, {int flags : BindingFlags.ALL, bool inherited : true}) {
+    return getMembers(declarationMirror, flags: flags, inherited : inherited, members: MemberTypes.CONSTRUCTOR);
+  }
+
+  static Map<Uri, LibraryMirror> getLibraries() {
+    return mirrorSystem.libraries;
+  }
+
+  static DeclarationMirror getMember(DeclarationMirror declarationMirror, Symbol name, {int flags : BindingFlags.ALL, bool inherited : true, int types : MemberTypes.ALL}) {
+    if(name == null) {
+      throw new ArgumentError("name: $name");
+    }
+
+    return getMembers(declarationMirror, flags: flags, inherited : inherited, members: types)[name];
+  }
+
+  static Map<Symbol, DeclarationMirror> getMembers(DeclarationMirror declarationMirror, {int flags : BindingFlags.ALL, bool inherited : true, int members : MemberTypes.ALL}) {
+    if(declarationMirror == null) {
+      throw new ArgumentError("declarationMirror: $declarationMirror");
+    }
+
+    if(flags == null) {
+      throw new ArgumentError("flags: $flags");
+    }
+
+    if(inherited == null) {
+      throw new ArgumentError("inherited: $inherited");
+    }
+
+    if(members == null) {
+      throw new ArgumentError("memberTypes: $members");
+    }
+
+    var declarations = new List<Map<Symbol, DeclarationMirror>>();
+    var result = new Map<Symbol, DeclarationMirror>();
+    LibraryMirror library;
+    if(declarationMirror is LibraryMirror) {
+      declarations.add(declarationMirror.declarations);
+      library = declarationMirror;
+    } else if(declarationMirror is ClassMirror) {
+      ClassMirror classMirror = declarationMirror;
+      library = classMirror.owner;
+      if(inherited) {
+        while(true) {
+          declarations.add(classMirror.declarations);
+          classMirror = classMirror.superclass;
+          if(classMirror == null) {
+            break;
+          }
+        }
+      } else {
+        declarations.add(classMirror.declarations);
+      }
+    }
+
+    if(declarations.isEmpty) {
+      return result;
+    }
+
+    for(var level = declarations.length - 1; level >= 0; level--) {
+      for(DeclarationMirror declaration in declarations[level].values) {
+        var flag = 0;
+        var member = 0;
+        bool owned;
+        if(declaration.owner == library) {
+          owned = true;
+        } else if(declaration.owner != null && declaration.owner.owner == library) {
+          owned = true;
+        } else {
+          owned = false;
+        }
+
+        if(declaration.isPrivate) {
+          if(owned) {
+            flag |= BindingFlags.PRIVATE;
+          }
+        } else {
+          flag |= BindingFlags.PUBLIC;
+        }
+
+        if(!declaration.isPrivate || owned) {
+          if(flags == BindingFlags.ALL && members == MemberTypes.ALL) {
+            result[declaration.simpleName] = declaration;
+            continue;
+          }
+
+          if(declaration is VariableMirror) {
+            if(declaration.isStatic) {
+              if(level == 0) {
+                flag |= BindingFlags.STATIC;
+              } else {
+                continue;
+              }
+
+            } else {
+              flag |= BindingFlags.INSTANCE;
+            }
+
+            member = MemberTypes.VARIABLE;
+          } else if(declaration is MethodMirror) {
+            if(declaration.isGetter || declaration.isSetter) {
+              if(declaration.isStatic) {
+                if(level == 0) {
+                  flag |= BindingFlags.STATIC;
+                } else {
+                  continue;
+                }
+
+              } else {
+                flag |= BindingFlags.INSTANCE;
+              }
+
+              member = MemberTypes.ACCESSOR;
+            } else if(declaration.isConstructor && level == 0) {
+              member = MemberTypes.CONSTRUCTOR;
+            } else {
+              member = MemberTypes.METHOD;
+            }
+          } else if(declaration is ClassMirror) {
+            member = MemberTypes.CLASS;
+          } else {
+            continue;
+          }
+
+          if((flags & flag) != 0 && (members & member) != 0) {
+            result[declaration.simpleName] = declaration;
+          }
+        }
+      }
+    }
+
+    return result;
+  }
+
+  static DeclarationMirror getMethod(DeclarationMirror declarationMirror, Symbol name, {int flags : BindingFlags.ALL, bool inherited : true}) {
+    if(name == null) {
+      throw new ArgumentError("name: $name");
+    }
+
+    return getMethods(declarationMirror, flags : flags, inherited : inherited)[name];
+  }
+
+  static Map<Symbol, DeclarationMirror> getMethods(DeclarationMirror declarationMirror, {int flags : BindingFlags.ALL, bool inherited : true}) {
+    return getMembers(declarationMirror, flags: flags, inherited : inherited, members: MemberTypes.METHOD);
+  }
+
+  static LibraryMirror getRootLibrary([IsolateMirror isolateMirror]) {
+    if(isolateMirror == null) {
+      isolateMirror = mirrorSystem.isolate;
+    }
+
+    return isolateMirror.rootLibrary;
+  }
+
+  static DeclarationMirror getVariable(DeclarationMirror declarationMirror, Symbol name, {int flags : BindingFlags.ALL, bool inherited : true}) {
+    if(name == null) {
+      throw new ArgumentError("name: $name");
+    }
+
+    return getVariables(declarationMirror, flags : flags, inherited : inherited)[name];
+  }
+
+  static Map<Symbol, DeclarationMirror> getVariables(DeclarationMirror declarationMirror, {int flags : BindingFlags.ALL, bool inherited : true}) {
+    return getMembers(declarationMirror, flags: flags, inherited : inherited, members: MemberTypes.VARIABLE);
+  }
+
   static String symbolToString(Symbol symbol) {
     return MirrorSystem.getName(symbol);
   }
@@ -35,6 +237,10 @@ class Reflection {
     return typeGetMembers(type, flags: flags, inherited : inherited, members: MemberTypes.CONSTRUCTOR);
   }
 
+  static LibraryMirror typeGetLibrary(Type type) {
+    return typeGetTypeMirror(type).owner;
+  }
+
   static DeclarationMirror typeGetMember(Type type, Symbol name, {int flags : BindingFlags.ALL, bool inherited : true, int types : MemberTypes.ALL}) {
     if(name == null) {
       throw new ArgumentError("name: $name");
@@ -44,108 +250,7 @@ class Reflection {
   }
 
   static Map<Symbol, DeclarationMirror> typeGetMembers(Type type, {int flags : BindingFlags.ALL, bool inherited : true, int members : MemberTypes.ALL}) {
-    if(flags == null) {
-      throw new ArgumentError("flags: $flags");
-    }
-
-    if(inherited == null) {
-      throw new ArgumentError("inherited: $inherited");
-    }
-
-    if(members == null) {
-      throw new ArgumentError("memberTypes: $members");
-    }
-
-    var classMirror = typeGetTypeMirror(type);
-    var declarations = new Map<Symbol, DeclarationMirror>();
-    if(classMirror is ClassMirror) {
-      var classes = new List<ClassMirror>();
-      if(inherited) {
-        while(true) {
-          classes.add(classMirror);
-          classMirror = classMirror.superclass;
-          if(classMirror == null) {
-            break;
-          }
-        }
-      } else {
-        classes.add(classMirror);
-      }
-
-      var library = classes[0].owner;
-      for(var level = classes.length - 1; level >= 0; level--) {
-        var classMirror = classes[level];
-        for(DeclarationMirror declaration in classMirror.declarations.values) {
-          var flag = 0;
-          var member = 0;
-          var owned = false;
-          if(declaration.owner != null && declaration.owner.owner == library) {
-            owned = true;
-          }
-
-          if(declaration.isPrivate) {
-            if(owned) {
-              flag |= BindingFlags.PRIVATE;
-            }
-          } else {
-            flag |= BindingFlags.PUBLIC;
-          }
-
-          if(!declaration.isPrivate || owned) {
-            if(flags == BindingFlags.ALL && members == MemberTypes.ALL) {
-              declarations[declaration.simpleName] = declaration;
-              continue;
-            }
-
-            if(declaration is VariableMirror) {
-              if(declaration.isStatic) {
-                if(level == 0) {
-                  flag |= BindingFlags.STATIC;
-                } else {
-                  continue;
-                }
-
-              } else {
-                flag |= BindingFlags.INSTANCE;
-              }
-
-              member = MemberTypes.VARIABLE;
-            } else if(declaration is MethodMirror) {
-              if(declaration.isGetter || declaration.isSetter) {
-                if(declaration.isStatic) {
-                  if(level == 0) {
-                    flag |= BindingFlags.STATIC;
-                  } else {
-                    continue;
-                  }
-
-                } else {
-                  flag |= BindingFlags.INSTANCE;
-                }
-
-                member = MemberTypes.ACCESSOR;
-              } else if(declaration.isConstructor && level == 0) {
-                member = MemberTypes.CONSTRUCTOR;
-              } else {
-                member = MemberTypes.METHOD;
-              }
-            } else {
-              continue;
-            }
-
-            if((flags & flag) != 0 && (members & member) != 0) {
-              declarations[declaration.simpleName] = declaration;
-            }
-          }
-        }
-      }
-    }
-
-    return declarations;
-  }
-
-  static Symbol typeGetQualifiedName(Type type) {
-    return typeGetTypeMirror(type).qualifiedName;
+    return getMembers(typeGetTypeMirror(type), flags: flags, inherited: inherited, members: members);
   }
 
   static DeclarationMirror typeGetMethod(Type type, Symbol name, {int flags : BindingFlags.ALL, bool inherited : true}) {
@@ -158,6 +263,10 @@ class Reflection {
 
   static Map<Symbol, DeclarationMirror> typeGetMethods(Type type, {int flags : BindingFlags.ALL, bool inherited : true}) {
     return typeGetMembers(type, flags: flags, inherited : inherited, members: MemberTypes.METHOD);
+  }
+
+  static Symbol typeGetQualifiedName(Type type) {
+    return typeGetTypeMirror(type).qualifiedName;
   }
 
   static Symbol typeGetSimpleName(Type type) {
@@ -279,9 +388,9 @@ class Reflection {
       }
 
       for(var i = 0; i < length; i++) {
-        var typeVariable = typeArguments[i];
-        var otherVariable = otherArguments[i];
-        if(!_typeMirrorIs(typeVariable, otherVariable)) {
+        var typeArgument = typeArguments[i];
+        var otherArgument = otherArguments[i];
+        if(!_typeMirrorIs(typeArgument, otherArgument)) {
           return false;
         }
       }
