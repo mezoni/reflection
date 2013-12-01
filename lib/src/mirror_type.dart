@@ -31,11 +31,11 @@ class MirrorType {
     }
   }
 
-  static bool _isA(TypeMirror typeMirror, TypeMirror other, bool otherIsGeneric, {_Variance variance : _Variance.COVARIANCE}) {
-    if(typeMirror == other) {
+  static bool _isA(TypeMirror typeMirror, TypeMirror other, bool otherIsGeneric) {
+    if(typeMirror == other || identical(other, Reflection.objectType)) {
       return true;
     } else if(other is! ClassMirror) {
-      if(other == Reflection.mirrorSystem.dynamicType) {
+      if(other == Reflection.dynamicType) {
         return true;
       }
 

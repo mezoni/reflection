@@ -201,6 +201,38 @@ class MirrorDeclaration {
     return getMembers(declarationMirror, flags: flags, inherited : inherited, members: MemberTypes.METHOD);
   }
 
+  static int getModifiers(DeclarationMirror declarationMirror) {
+    if(declarationMirror == null) {
+      throw new ArgumentError("declarationMirror: $declarationMirror");
+    }
+
+    var result = 0;
+    if(declarationMirror is VariableMirror) {
+      if(declarationMirror.isConst) {
+        result |= Modifiers.CONST;
+      }
+
+      if(declarationMirror.isFinal) {
+        result |= Modifiers.FINAL;
+      }
+
+      if(declarationMirror.isStatic) {
+        result |= Modifiers.STATIC;
+      }
+
+    } else if(declarationMirror is MethodMirror) {
+      if(declarationMirror.isAbstract) {
+        result |= Modifiers.ABSTRACT;
+      }
+
+      if(declarationMirror.isStatic) {
+        result |= Modifiers.STATIC;
+      }
+    }
+
+    return result;
+  }
+
   static VariableMirror getVariable(DeclarationMirror declarationMirror, Symbol name, {int flags : BindingFlags.DEFAULT, bool inherited : true}) {
     if(name == null) {
       throw new ArgumentError("name: $name");
