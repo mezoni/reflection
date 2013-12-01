@@ -1,6 +1,8 @@
 part of reflection;
 
 class BindingFlags {
+  static const int DEFAULT = 0;
+
   static const int INSTANCE = 1;
 
   static const int PRIVATE = 2;

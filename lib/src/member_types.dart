@@ -1,6 +1,8 @@
-part of queries.reflection;
+part of reflection;
 
 class MemberTypes {
+  static const int DEFAULT = 0;
+
   static const int ACCESSOR = 1;
 
   static const int CLASS = 2;
