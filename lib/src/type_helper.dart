@@ -64,7 +64,7 @@ class TypeHelper {
   }
 
   static bool isA(Type type, Type other) {
-    return MirrorType.isA(getTypeMirror(type), getTypeMirror(other));
+    return typeinfo(type).isA(typeinfo(other));
   }
 
   static dynamic newInstance(Type type, [Symbol constructorName, List positionalArguments, Map<Symbol,dynamic> namedArguments]) {

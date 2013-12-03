@@ -10,7 +10,7 @@ void isA() {
   var type2 = new TypeOf<Iterable<Object>>().type;
   var instance = TypeHelper.newInstance(type1);
   var result = instance is Iterable<Object>;
-  //printIs(type1, type2, result);
+  printIs(type1, type2, result);
 
   instance = "";
   type1 = instance.runtimeType;
