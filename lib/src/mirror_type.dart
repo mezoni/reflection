@@ -20,7 +20,7 @@ class MirrorType {
   }
 
   static bool isA(TypeMirror typeMirror, TypeMirror other) {
-    return typeinfo(typeMirror).isA(typeinfo(other));
+    return new _TypeInfo.fromMirror(typeMirror).isA(new _TypeInfo.fromMirror(other));
   }
 
   static InstanceMirror newInstance(TypeMirror typeMirror, [Symbol constructorName, List positionalArguments, Map<Symbol,dynamic> namedArguments]) {

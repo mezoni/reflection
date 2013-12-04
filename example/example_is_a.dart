@@ -41,6 +41,12 @@ void isA() {
   type2 = new TypeOf<Comparable<String>>().type;
   result = instance is Comparable<String>;
   printIs(type1, type2, result);
+
+  type1 = new TypeOf<Test<String, int>>().type;
+  type2 = new TypeOf<Mixin2<int>>().type;
+  instance = TypeHelper.newInstance(type1);
+  result = instance is Mixin2<int>;
+  printIs(type1, type2, result);
 }
 
 void printIs(Type type, Type other, bool mustBe) {
@@ -55,4 +61,13 @@ void printIs(Type type, Type other, bool mustBe) {
 
 class TypeOf<T> {
   Type get type => T;
+}
+
+class Test<T1, T2> extends Object with Mixin1<T1>, Mixin2<T2> {
+}
+
+class Mixin1<T> {
+}
+
+class Mixin2<T> {
 }

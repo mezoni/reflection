@@ -1,4 +1,3 @@
-import 'dart:mirrors';
 import 'package:reflection/reflection.dart';
 
 void main() {
@@ -13,39 +12,16 @@ void main() {
     result1 = sw.elapsedMilliseconds;
   }
 
-  sw.start();
-  if(testTypeInfoIsType(count) != null) {
-    sw.stop();
-    result2 = sw.elapsedMilliseconds;
-  }
-
-  if(result1 > 0) {
-    var slower = (result2 / result1).round();
-    print("'TypeInfo.isA(Type)' slower then 'is' in $slower times");
-  }
-
   sw.reset();
   sw.start();
-  if(testTypeInfoIsTypeInfo(count) != null) {
+  if(testTypeInfoIs(count) != null) {
     sw.stop();
     result2 = sw.elapsedMilliseconds;
   }
 
   if(result1 > 0) {
     var slower = (result2 / result1).round();
-    print("'TypeInfo.isA(TypeInfo)' slower then 'is' in $slower times");
-  }
-
-  sw.reset();
-  sw.start();
-  if(testTypeInfoIsTypeMirror(count) != null) {
-    sw.stop();
-    result2 = sw.elapsedMilliseconds;
-  }
-
-  if(result1 > 0) {
-    var slower = (result2 / result1).round();
-    print("'TypeInfo.isA(TypeMirror)' slower then 'is' in $slower times");
+    print("'TypeInfo.isA' slower then 'is' in $slower times");
   }
 }
 
@@ -53,48 +29,19 @@ List testNativeIs(int count) {
   var list = new List(count);
   var runtimeType = list.runtimeType;
   for(var i = 0; i < count; i++) {
-    // Prevent optimization
     list[i] = runtimeType is Iterable;
   }
 
   return list;
 }
 
-List testTypeInfoIsType(int count) {
+List testTypeInfoIs(int count) {
   var list = new List(count);
-  var listType = list.runtimeType;
-  var listInfo = typeinfo(listType);
+  var type1 = typeinfo(list.runtimeType);
+  var type2 = typeinfo(Iterable);
   for(var i = 0; i < count; i++) {
-    // Prevent optimization
-    list[i] = listInfo.isA(Iterable);
+    list[i] = type1.isA(type2);
   }
 
   return list;
 }
-
-List testTypeInfoIsTypeInfo(int count) {
-  var list = new List(count);
-  var listType = list.runtimeType;
-  var listInfo = typeinfo(listType);
-  var iterableInfo = typeinfo(Iterable);
-  for(var i = 0; i < count; i++) {
-    // Prevent optimization
-    list[i] = listInfo.isA(iterableInfo);
-  }
-
-  return list;
-}
-
-List testTypeInfoIsTypeMirror(int count) {
-  var list = new List(count);
-  var listType = list.runtimeType;
-  var listInfo = typeinfo(listType);
-  var iterableMirror = reflectType(Iterable);
-  for(var i = 0; i < count; i++) {
-    // Prevent optimization
-    list[i] = listInfo.isA(iterableMirror);
-  }
-
-  return list;
-}
-

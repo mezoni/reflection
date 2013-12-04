@@ -7,9 +7,9 @@ abstract class IsolateInfo {
 class _IsolateInfo implements IsolateInfo {
   Map<Uri, LibraryInfo> _libraries;
 
-  Reflection2 _reflection;
+  MirrorSystemInfo _reflection;
 
-  _IsolateInfo({Reflection2 reflection}) {
+  _IsolateInfo({MirrorSystemInfo reflection}) {
     _reflection = reflection;
   }
 

@@ -1,20 +1,20 @@
 part of reflection;
 
-abstract class Reflection2 {
-  static final Reflection2 current = new _Reflection2();
+abstract class MirrorSystemInfo {
+  static final MirrorSystemInfo current = new _MirrorSystemInfo(mirror : currentMirrorSystem());
 
   IsolateInfo get isolate;
 
   MirrorSystem get mirror;
 }
 
-class _Reflection2 implements Reflection2 {
+class _MirrorSystemInfo implements MirrorSystemInfo {
   IsolateInfo _isolate;
 
   MirrorSystem _mirror;
 
-  _Reflection2() {
-    _mirror = currentMirrorSystem();
+  _MirrorSystemInfo({MirrorSystem mirror}) {
+    _mirror = mirror;
   }
 
   IsolateInfo get isolate {

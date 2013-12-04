@@ -1,11 +1,13 @@
 library reflection;
 
+import 'dart:collection';
 import 'dart:mirrors';
 import 'package:unmodifiable_collection/unmodifiable_collection.dart';
 
+part 'src/exprerimental/instance_info.dart';
 part 'src/exprerimental/isolate_info.dart';
 part 'src/exprerimental/library_info.dart';
-part 'src/exprerimental/reflection2.dart';
+part 'src/exprerimental/mirror_system_info.dart';
 part 'src/exprerimental/type_info.dart';
 part 'src/exprerimental/type_parameter.dart';
 part 'src/binding_flags.dart';
