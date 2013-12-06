@@ -1,169 +1,169 @@
 part of reflection;
 
 abstract class Membership {
-  TypeInfo getClass(Symbol name, [BindingFlags2 bindingAttr]);
+  TypeInfo getClass(Symbol name, [BindingFlags bindingAttr]);
 
-  Map<Symbol, TypeInfo> getClasses([BindingFlags2 bindingAttr]);
+  Map<Symbol, TypeInfo> getClasses([BindingFlags bindingAttr]);
 
-  ConstructorInfo getConstructor(Symbol name, [BindingFlags2 bindingAttr]);
+  ConstructorInfo getConstructor(Symbol name, [BindingFlags bindingAttr]);
 
-  Map<Symbol, ConstructorInfo> getConstructors([BindingFlags2 bindingAttr]);
+  Map<Symbol, ConstructorInfo> getConstructors([BindingFlags bindingAttr]);
 
-  MemberInfo getMember(Symbol name, [BindingFlags2 bindingAttr]);
+  MemberInfo getMember(Symbol name, [BindingFlags bindingAttr]);
 
-  Map<Symbol, MemberInfo> getMembers([BindingFlags2 bindingAttr]);
+  Map<Symbol, MemberInfo> getMembers([BindingFlags bindingAttr]);
 
-  MethodInfo getMethod(Symbol name, [BindingFlags2 bindingAttr]);
+  MethodInfo getMethod(Symbol name, [BindingFlags bindingAttr]);
 
-  Map<Symbol, MethodInfo> getMethods([BindingFlags2 bindingAttr]);
+  Map<Symbol, MethodInfo> getMethods([BindingFlags bindingAttr]);
 
-  Map<Symbol, PropertyInfo> getProperties([BindingFlags2 bindingAttr]);
+  Map<Symbol, PropertyInfo> getProperties([BindingFlags bindingAttr]);
 
-  PropertyInfo getProperty(Symbol name, [BindingFlags2 bindingAttr]);
+  PropertyInfo getProperty(Symbol name, [BindingFlags bindingAttr]);
 
-  Map<Symbol, VariableInfo> getVariables([BindingFlags2 bindingAttr]);
+  Map<Symbol, VariableInfo> getVariables([BindingFlags bindingAttr]);
 
-  VariableInfo getVariable(Symbol name, [BindingFlags2 bindingAttr]);
+  VariableInfo getVariable(Symbol name, [BindingFlags bindingAttr]);
 }
 
 class _Membership {
-  static TypeInfo getClass(HasMembers owner, Symbol name, [BindingFlags2 bindingAttr]) {
+  static TypeInfo getClass(HasMembers owner, Symbol name, [BindingFlags bindingAttr]) {
     if(bindingAttr == null) {
-      bindingAttr = BindingFlags2.PUBLIC | BindingFlags2.GET_CLASS;
+      bindingAttr = BindingFlags.PUBLIC | BindingFlags.GET_CLASS;
     } else {
-      bindingAttr &= BindingFlags2.PUBLIC | BindingFlags2.PRIVATE | BindingFlags2.GET_CLASS;
-      bindingAttr |= BindingFlags2.GET_CLASS;
+      bindingAttr &= BindingFlags.PUBLIC | BindingFlags.PRIVATE | BindingFlags.GET_CLASS;
+      bindingAttr |= BindingFlags.GET_CLASS;
     }
 
     return _getMembers(owner, name, bindingAttr)[name];
   }
 
-  static Map<Symbol, TypeInfo> getClasses(HasMembers owner, [BindingFlags2 bindingAttr]) {
+  static Map<Symbol, TypeInfo> getClasses(HasMembers owner, [BindingFlags bindingAttr]) {
     if(bindingAttr == null) {
-      bindingAttr = BindingFlags2.PUBLIC | BindingFlags2.GET_CLASS;
+      bindingAttr = BindingFlags.PUBLIC | BindingFlags.GET_CLASS;
     } else {
-      bindingAttr &= BindingFlags2.PUBLIC | BindingFlags2.PRIVATE | BindingFlags2.GET_CLASS;
-      bindingAttr |= BindingFlags2.GET_CLASS;
+      bindingAttr &= BindingFlags.PUBLIC | BindingFlags.PRIVATE | BindingFlags.GET_CLASS;
+      bindingAttr |= BindingFlags.GET_CLASS;
     }
 
     return new UnmodifiableMapView<Symbol, TypeInfo>(_getMembers(owner, null, bindingAttr));
   }
 
-  static ConstructorInfo getConstructor(HasMembers owner, Symbol name, [BindingFlags2 bindingAttr]) {
+  static ConstructorInfo getConstructor(HasMembers owner, Symbol name, [BindingFlags bindingAttr]) {
     if(bindingAttr == null) {
-      bindingAttr = BindingFlags2.PUBLIC | BindingFlags2.INSTANCE | BindingFlags2.GET_CONSTRUCTOR;
+      bindingAttr = BindingFlags.PUBLIC | BindingFlags.INSTANCE | BindingFlags.GET_CONSTRUCTOR;
     } else {
-      bindingAttr &= BindingFlags2.PUBLIC | BindingFlags2.PRIVATE | BindingFlags2.INSTANCE | BindingFlags2.GET_CONSTRUCTOR;
-      bindingAttr |= BindingFlags2.INSTANCE | BindingFlags2.GET_CONSTRUCTOR;
+      bindingAttr &= BindingFlags.PUBLIC | BindingFlags.PRIVATE | BindingFlags.INSTANCE | BindingFlags.GET_CONSTRUCTOR;
+      bindingAttr |= BindingFlags.INSTANCE | BindingFlags.GET_CONSTRUCTOR;
     }
 
     return _getMembers(owner, name, bindingAttr)[name];
   }
 
-  static Map<Symbol, ConstructorInfo> getConstructors(HasMembers owner, [BindingFlags2 bindingAttr]) {
+  static Map<Symbol, ConstructorInfo> getConstructors(HasMembers owner, [BindingFlags bindingAttr]) {
     if(bindingAttr == null) {
-      bindingAttr = BindingFlags2.PUBLIC | BindingFlags2.INSTANCE | BindingFlags2.GET_CONSTRUCTOR;
+      bindingAttr = BindingFlags.PUBLIC | BindingFlags.INSTANCE | BindingFlags.GET_CONSTRUCTOR;
     } else {
-      bindingAttr &= BindingFlags2.PUBLIC | BindingFlags2.PRIVATE | BindingFlags2.INSTANCE | BindingFlags2.GET_CONSTRUCTOR;
-      bindingAttr |= BindingFlags2.INSTANCE | BindingFlags2.GET_CONSTRUCTOR;
+      bindingAttr &= BindingFlags.PUBLIC | BindingFlags.PRIVATE | BindingFlags.INSTANCE | BindingFlags.GET_CONSTRUCTOR;
+      bindingAttr |= BindingFlags.INSTANCE | BindingFlags.GET_CONSTRUCTOR;
     }
 
     return new UnmodifiableMapView<Symbol, ConstructorInfo>(_getMembers(owner, null, bindingAttr));
   }
 
-  static MemberInfo getMember(HasMembers owner, Symbol name, [BindingFlags2 bindingAttr]) {
+  static MemberInfo getMember(HasMembers owner, Symbol name, [BindingFlags bindingAttr]) {
     if(bindingAttr == null) {
-      bindingAttr = BindingFlags2.PUBLIC | BindingFlags2.INSTANCE | BindingFlags2.STATIC;
+      bindingAttr = BindingFlags.PUBLIC | BindingFlags.INSTANCE | BindingFlags.STATIC;
     }
 
     return _getMembers(owner, name, bindingAttr)[name];
   }
 
-  static Map<Symbol, MemberInfo> getMembers(HasMembers owner, [BindingFlags2 bindingAttr]) {
+  static Map<Symbol, MemberInfo> getMembers(HasMembers owner, [BindingFlags bindingAttr]) {
     if(bindingAttr == null) {
-      bindingAttr = BindingFlags2.PUBLIC | BindingFlags2.INSTANCE | BindingFlags2.STATIC;
+      bindingAttr = BindingFlags.PUBLIC | BindingFlags.INSTANCE | BindingFlags.STATIC;
     }
 
     return new UnmodifiableMapView<Symbol, MemberInfo>(_getMembers(owner, null, bindingAttr));
   }
 
-  static MethodInfo getMethod(HasMembers owner, Symbol name, [BindingFlags2 bindingAttr]) {
+  static MethodInfo getMethod(HasMembers owner, Symbol name, [BindingFlags bindingAttr]) {
     if(bindingAttr == null) {
-      bindingAttr = BindingFlags2.PUBLIC | BindingFlags2.INSTANCE | BindingFlags2.STATIC | BindingFlags2.GET_METHOD;
+      bindingAttr = BindingFlags.PUBLIC | BindingFlags.INSTANCE | BindingFlags.STATIC | BindingFlags.GET_METHOD;
     } else {
-      bindingAttr &= BindingFlags2.PUBLIC | BindingFlags2.PRIVATE | BindingFlags2.INSTANCE | BindingFlags2.STATIC | BindingFlags2.GET_METHOD;
-      bindingAttr |= BindingFlags2.GET_METHOD;
+      bindingAttr &= BindingFlags.PUBLIC | BindingFlags.PRIVATE | BindingFlags.INSTANCE | BindingFlags.STATIC | BindingFlags.GET_METHOD;
+      bindingAttr |= BindingFlags.GET_METHOD;
     }
 
     return _getMembers(owner, name, bindingAttr)[name];
   }
 
-  static Map<Symbol, MethodInfo> getMethods(HasMembers owner, [BindingFlags2 bindingAttr]) {
+  static Map<Symbol, MethodInfo> getMethods(HasMembers owner, [BindingFlags bindingAttr]) {
     if(bindingAttr == null) {
-      bindingAttr = BindingFlags2.PUBLIC | BindingFlags2.INSTANCE | BindingFlags2.STATIC | BindingFlags2.GET_METHOD;
+      bindingAttr = BindingFlags.PUBLIC | BindingFlags.INSTANCE | BindingFlags.STATIC | BindingFlags.GET_METHOD;
     } else {
-      bindingAttr &= BindingFlags2.PUBLIC | BindingFlags2.PRIVATE | BindingFlags2.INSTANCE | BindingFlags2.STATIC | BindingFlags2.GET_METHOD;
-      bindingAttr |= BindingFlags2.GET_METHOD;
+      bindingAttr &= BindingFlags.PUBLIC | BindingFlags.PRIVATE | BindingFlags.INSTANCE | BindingFlags.STATIC | BindingFlags.GET_METHOD;
+      bindingAttr |= BindingFlags.GET_METHOD;
     }
 
     return new UnmodifiableMapView<Symbol, MethodInfo>(_getMembers(owner, null, bindingAttr));
   }
 
-  static PropertyInfo getProperty(HasMembers owner, Symbol name, [BindingFlags2 bindingAttr]) {
+  static PropertyInfo getProperty(HasMembers owner, Symbol name, [BindingFlags bindingAttr]) {
     if(bindingAttr == null) {
-      bindingAttr = BindingFlags2.PUBLIC | BindingFlags2.INSTANCE | BindingFlags2.STATIC | BindingFlags2.GET_PROPERTY;
+      bindingAttr = BindingFlags.PUBLIC | BindingFlags.INSTANCE | BindingFlags.STATIC | BindingFlags.GET_PROPERTY;
     } else {
-      bindingAttr &= BindingFlags2.PUBLIC | BindingFlags2.PRIVATE | BindingFlags2.INSTANCE | BindingFlags2.STATIC | BindingFlags2.GET_PROPERTY;
-      bindingAttr |= BindingFlags2.GET_PROPERTY;
+      bindingAttr &= BindingFlags.PUBLIC | BindingFlags.PRIVATE | BindingFlags.INSTANCE | BindingFlags.STATIC | BindingFlags.GET_PROPERTY;
+      bindingAttr |= BindingFlags.GET_PROPERTY;
     }
 
     return _getMembers(owner, name, bindingAttr)[name];
   }
 
-  static Map<Symbol, PropertyInfo> getProperties(HasMembers owner, [BindingFlags2 bindingAttr]) {
+  static Map<Symbol, PropertyInfo> getProperties(HasMembers owner, [BindingFlags bindingAttr]) {
     if(bindingAttr == null) {
-      bindingAttr = BindingFlags2.PUBLIC | BindingFlags2.INSTANCE | BindingFlags2.STATIC | BindingFlags2.GET_PROPERTY;
+      bindingAttr = BindingFlags.PUBLIC | BindingFlags.INSTANCE | BindingFlags.STATIC | BindingFlags.GET_PROPERTY;
     } else {
-      bindingAttr &= BindingFlags2.PUBLIC | BindingFlags2.PRIVATE | BindingFlags2.INSTANCE | BindingFlags2.STATIC | BindingFlags2.GET_PROPERTY;
-      bindingAttr |= BindingFlags2.GET_PROPERTY;
+      bindingAttr &= BindingFlags.PUBLIC | BindingFlags.PRIVATE | BindingFlags.INSTANCE | BindingFlags.STATIC | BindingFlags.GET_PROPERTY;
+      bindingAttr |= BindingFlags.GET_PROPERTY;
     }
 
     return new UnmodifiableMapView<Symbol, PropertyInfo>(_getMembers(owner, null, bindingAttr));
   }
 
-  static VariableInfo getVariable(HasMembers owner, Symbol name, [BindingFlags2 bindingAttr]) {
+  static VariableInfo getVariable(HasMembers owner, Symbol name, [BindingFlags bindingAttr]) {
     if(bindingAttr == null) {
-      bindingAttr = BindingFlags2.PUBLIC | BindingFlags2.INSTANCE | BindingFlags2.STATIC | BindingFlags2.GET_VARIABLE;
+      bindingAttr = BindingFlags.PUBLIC | BindingFlags.INSTANCE | BindingFlags.STATIC | BindingFlags.GET_VARIABLE;
     } else {
-      bindingAttr &= BindingFlags2.PUBLIC | BindingFlags2.PRIVATE | BindingFlags2.INSTANCE | BindingFlags2.STATIC | BindingFlags2.GET_VARIABLE;
-      bindingAttr |= BindingFlags2.GET_VARIABLE;
+      bindingAttr &= BindingFlags.PUBLIC | BindingFlags.PRIVATE | BindingFlags.INSTANCE | BindingFlags.STATIC | BindingFlags.GET_VARIABLE;
+      bindingAttr |= BindingFlags.GET_VARIABLE;
     }
 
     return _getMembers(owner, name, bindingAttr)[name];
   }
 
-  static Map<Symbol, VariableInfo> getVariables(HasMembers owner, [BindingFlags2 bindingAttr]) {
+  static Map<Symbol, VariableInfo> getVariables(HasMembers owner, [BindingFlags bindingAttr]) {
     if(bindingAttr == null) {
-      bindingAttr = BindingFlags2.PUBLIC | BindingFlags2.INSTANCE | BindingFlags2.STATIC | BindingFlags2.GET_VARIABLE;
+      bindingAttr = BindingFlags.PUBLIC | BindingFlags.INSTANCE | BindingFlags.STATIC | BindingFlags.GET_VARIABLE;
     } else {
-      bindingAttr &= BindingFlags2.PUBLIC | BindingFlags2.PRIVATE | BindingFlags2.INSTANCE | BindingFlags2.STATIC | BindingFlags2.GET_VARIABLE;
-      bindingAttr |= BindingFlags2.GET_VARIABLE;
+      bindingAttr &= BindingFlags.PUBLIC | BindingFlags.PRIVATE | BindingFlags.INSTANCE | BindingFlags.STATIC | BindingFlags.GET_VARIABLE;
+      bindingAttr |= BindingFlags.GET_VARIABLE;
     }
 
     return new UnmodifiableMapView<Symbol, VariableInfo>(_getMembers(owner, null, bindingAttr));
   }
 
-  static Map<Symbol, MemberInfo> _getMembers(HasMembers owner, Symbol name, [BindingFlags2 bindingAttr]) {
+  static Map<Symbol, MemberInfo> _getMembers(HasMembers owner, Symbol name, [BindingFlags bindingAttr]) {
     if(owner == null) {
       throw new ArgumentError("owner: $owner");
     }
 
     if(bindingAttr == null) {
-      bindingAttr = BindingFlags2.PUBLIC | BindingFlags2.INSTANCE | BindingFlags2.STATIC;
+      bindingAttr = BindingFlags.PUBLIC | BindingFlags.INSTANCE | BindingFlags.STATIC;
     }
 
-    if(bindingAttr & (BindingFlags2.GET_CLASS | BindingFlags2.GET_CONSTRUCTOR | BindingFlags2.GET_METHOD | BindingFlags2.GET_PROPERTY | BindingFlags2.GET_VARIABLE) == 0) {
-      bindingAttr |= BindingFlags2.GET_CLASS | BindingFlags2.GET_CONSTRUCTOR | BindingFlags2.GET_METHOD | BindingFlags2.GET_PROPERTY | BindingFlags2.GET_VARIABLE;
+    if(bindingAttr & (BindingFlags.GET_CLASS | BindingFlags.GET_CONSTRUCTOR | BindingFlags.GET_METHOD | BindingFlags.GET_PROPERTY | BindingFlags.GET_VARIABLE) == 0) {
+      bindingAttr |= BindingFlags.GET_CLASS | BindingFlags.GET_CONSTRUCTOR | BindingFlags.GET_METHOD | BindingFlags.GET_PROPERTY | BindingFlags.GET_VARIABLE;
     }
 
     LibraryInfo library;
@@ -171,7 +171,7 @@ class _Membership {
     if(owner is TypeInfo) {
       library = owner.library;
       members = new Map<Symbol, MemberInfo>();
-      if((bindingAttr & BindingFlags2.DECLARED_ONLY) == 0) {
+      if((bindingAttr & BindingFlags.DECLARED_ONLY) == 0) {
         var types = new List<TypeInfo>();
         var type = owner;
         while(type != null) {
@@ -202,30 +202,30 @@ class _Membership {
     for(var member in members.values) {
       var accepted = false;
       switch(member.memberType) {
-        case MemberTypes2.CLASS:
-          if((bindingAttr & BindingFlags2.GET_CLASS) != 0) {
+        case MemberTypes.CLASS:
+          if((bindingAttr & BindingFlags.GET_CLASS) != 0) {
             if(member.isPrivate) {
-              if((bindingAttr & BindingFlags2.PRIVATE) != 0) {
+              if((bindingAttr & BindingFlags.PRIVATE) != 0) {
                 accepted = true;
               }
             } else {
-              if((bindingAttr & BindingFlags2.PUBLIC) != 0) {
+              if((bindingAttr & BindingFlags.PUBLIC) != 0) {
                 accepted = true;
               }
             }
           }
 
           break;
-        case MemberTypes2.CONSTRUCTOR:
+        case MemberTypes.CONSTRUCTOR:
           if(member.owner == owner) {
             ConstructorInfo constructor = member;
-            if((bindingAttr & BindingFlags2.GET_CONSTRUCTOR) != 0) {
+            if((bindingAttr & BindingFlags.GET_CONSTRUCTOR) != 0) {
               if(constructor.isPrivate) {
-                if((bindingAttr & BindingFlags2.PRIVATE) != 0) {
+                if((bindingAttr & BindingFlags.PRIVATE) != 0) {
                   accepted = true;
                 }
               } else {
-                if((bindingAttr & BindingFlags2.PUBLIC) != 0) {
+                if((bindingAttr & BindingFlags.PUBLIC) != 0) {
                   accepted = true;
                 }
               }
@@ -233,24 +233,24 @@ class _Membership {
 
             if(accepted) {
               accepted = false;
-              if((bindingAttr & BindingFlags2.INSTANCE) != 0) {
+              if((bindingAttr & BindingFlags.INSTANCE) != 0) {
                 accepted = true;
               }
             }
           }
 
           break;
-        case MemberTypes2.METHOD:
+        case MemberTypes.METHOD:
           MethodInfo method = member;
-          if((bindingAttr & BindingFlags2.GET_METHOD) != 0) {
+          if((bindingAttr & BindingFlags.GET_METHOD) != 0) {
             if(member.isPrivate) {
-              if((bindingAttr & BindingFlags2.PRIVATE) != 0) {
+              if((bindingAttr & BindingFlags.PRIVATE) != 0) {
                 if(member.library == library) {
                   accepted = true;
                 }
               }
             } else {
-              if((bindingAttr & BindingFlags2.PUBLIC) != 0) {
+              if((bindingAttr & BindingFlags.PUBLIC) != 0) {
                 accepted = true;
               }
             }
@@ -258,13 +258,13 @@ class _Membership {
             if(accepted) {
               accepted = false;
               if(method.isStatic) {
-                if((bindingAttr & BindingFlags2.STATIC) != 0) {
+                if((bindingAttr & BindingFlags.STATIC) != 0) {
                   if(method.owner == owner) {
                     accepted = true;
                   }
                 }
               } else {
-                if((bindingAttr & BindingFlags2.INSTANCE) != 0) {
+                if((bindingAttr & BindingFlags.INSTANCE) != 0) {
                   accepted = true;
                 }
               }
@@ -272,17 +272,17 @@ class _Membership {
           }
 
           break;
-        case MemberTypes2.PROPERTY:
+        case MemberTypes.PROPERTY:
           PropertyInfo property = member;
-          if((bindingAttr & BindingFlags2.GET_PROPERTY) != 0) {
+          if((bindingAttr & BindingFlags.GET_PROPERTY) != 0) {
             if(member.isPrivate) {
-              if((bindingAttr & BindingFlags2.PRIVATE) != 0) {
+              if((bindingAttr & BindingFlags.PRIVATE) != 0) {
                 if(member.library == library) {
                   accepted = true;
                 }
               }
             } else {
-              if((bindingAttr & BindingFlags2.PUBLIC) != 0) {
+              if((bindingAttr & BindingFlags.PUBLIC) != 0) {
                 accepted = true;
               }
             }
@@ -290,13 +290,13 @@ class _Membership {
             if(accepted) {
               accepted = false;
               if(property.isStatic) {
-                if((bindingAttr & BindingFlags2.STATIC) != 0) {
+                if((bindingAttr & BindingFlags.STATIC) != 0) {
                   if(property.owner == owner) {
                     accepted = true;
                   }
                 }
               } else {
-                if((bindingAttr & BindingFlags2.INSTANCE) != 0) {
+                if((bindingAttr & BindingFlags.INSTANCE) != 0) {
                   accepted = true;
                 }
               }
@@ -304,17 +304,17 @@ class _Membership {
           }
 
           break;
-        case MemberTypes2.VARIABLE:
+        case MemberTypes.VARIABLE:
           VariableInfo variable = member;
-          if((bindingAttr & BindingFlags2.GET_VARIABLE) != 0) {
+          if((bindingAttr & BindingFlags.GET_VARIABLE) != 0) {
             if(member.isPrivate) {
-              if((bindingAttr & BindingFlags2.PRIVATE) != 0) {
+              if((bindingAttr & BindingFlags.PRIVATE) != 0) {
                 if(member.library == library) {
                   accepted = true;
                 }
               }
             } else {
-              if((bindingAttr & BindingFlags2.PUBLIC) != 0) {
+              if((bindingAttr & BindingFlags.PUBLIC) != 0) {
                 accepted = true;
               }
             }
@@ -322,13 +322,13 @@ class _Membership {
             if(accepted) {
               accepted = false;
               if(variable.isStatic) {
-                if((bindingAttr & BindingFlags2.STATIC) != 0) {
+                if((bindingAttr & BindingFlags.STATIC) != 0) {
                   if(variable.owner == owner) {
                     accepted = true;
                   }
                 }
               } else {
-                if((bindingAttr & BindingFlags2.INSTANCE) != 0) {
+                if((bindingAttr & BindingFlags.INSTANCE) != 0) {
                   accepted = true;
                 }
               }

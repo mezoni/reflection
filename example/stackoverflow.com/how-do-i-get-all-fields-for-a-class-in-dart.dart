@@ -12,28 +12,28 @@ void reflectTypeMembers() {
     var className = SymbolHelper.getName(type.qualifiedName);
     print("=========================");
     print("Class $className:");
-    var members = type.getMembers(BindingFlags2.PUBLIC | BindingFlags2.INSTANCE | BindingFlags2.STATIC | BindingFlags2.DECLARED_ONLY);
+    var members = type.getMembers(BindingFlags.PUBLIC | BindingFlags.INSTANCE | BindingFlags.STATIC | BindingFlags.DECLARED_ONLY);
     printMembers("Declared public members", members);
 
     members = type.getMembers();
     printMembers("Declared and inherited public members", members);
 
-    members = type.getMembers(BindingFlags2.PRIVATE | BindingFlags2.INSTANCE | BindingFlags2.STATIC | BindingFlags2.DECLARED_ONLY);
+    members = type.getMembers(BindingFlags.PRIVATE | BindingFlags.INSTANCE | BindingFlags.STATIC | BindingFlags.DECLARED_ONLY);
     printMembers("Declared private members", members);
 
-    members = type.getMembers(BindingFlags2.PRIVATE | BindingFlags2.INSTANCE | BindingFlags2.STATIC);
+    members = type.getMembers(BindingFlags.PRIVATE | BindingFlags.INSTANCE | BindingFlags.STATIC);
     printMembers("Declared and inherited private members", members);
 
     members = type.getConstructors();
     printMembers("Public constructors", members);
 
-    members = type.getConstructors(BindingFlags2.PRIVATE);
+    members = type.getConstructors(BindingFlags.PRIVATE);
     printMembers("Private constructors", members);
 
-    members = type.getMembers(BindingFlags2.PUBLIC | BindingFlags2.STATIC);
+    members = type.getMembers(BindingFlags.PUBLIC | BindingFlags.STATIC);
     printMembers("Public static members", members);
 
-    members = type.getMembers(BindingFlags2.PRIVATE | BindingFlags2.STATIC);
+    members = type.getMembers(BindingFlags.PRIVATE | BindingFlags.STATIC);
     printMembers("Private static members", members);
   }
 }

@@ -121,51 +121,51 @@ class _LibraryInfo extends _DeclarationInfo implements LibraryInfo {
     return new _InstanceInfo(mirror: _mirror.getField(fieldName));
   }
 
-  TypeInfo getClass(Symbol name, [BindingFlags2 bindingAttr]) {
+  TypeInfo getClass(Symbol name, [BindingFlags bindingAttr]) {
     return _Membership.getClass(this, name, bindingAttr);
   }
 
-  Map<Symbol, TypeInfo> getClasses([BindingFlags2 bindingAttr]) {
+  Map<Symbol, TypeInfo> getClasses([BindingFlags bindingAttr]) {
     return _Membership.getClasses(this, bindingAttr);
   }
 
-  ConstructorInfo getConstructor(Symbol name, [BindingFlags2 bindingAttr]) {
+  ConstructorInfo getConstructor(Symbol name, [BindingFlags bindingAttr]) {
     return _Membership.getConstructor(this, name, bindingAttr);
   }
 
-  Map<Symbol, ConstructorInfo> getConstructors([BindingFlags2 bindingAttr]) {
+  Map<Symbol, ConstructorInfo> getConstructors([BindingFlags bindingAttr]) {
     return _Membership.getConstructors(this, bindingAttr);
   }
 
-  MemberInfo getMember(Symbol name, [BindingFlags2 bindingAttr]) {
+  MemberInfo getMember(Symbol name, [BindingFlags bindingAttr]) {
     return _Membership.getMember(this, name, bindingAttr);
   }
 
-  Map<Symbol, MemberInfo> getMembers([BindingFlags2 bindingAttr]) {
+  Map<Symbol, MemberInfo> getMembers([BindingFlags bindingAttr]) {
     return _Membership.getMembers(this, bindingAttr);
   }
 
-  MethodInfo getMethod(Symbol name, [BindingFlags2 bindingAttr]) {
+  MethodInfo getMethod(Symbol name, [BindingFlags bindingAttr]) {
     return _Membership.getMethod(this, name, bindingAttr);
   }
 
-  Map<Symbol, MethodInfo> getMethods([BindingFlags2 bindingAttr]) {
+  Map<Symbol, MethodInfo> getMethods([BindingFlags bindingAttr]) {
     return _Membership.getMethods(this, bindingAttr);
   }
 
-  Map<Symbol, PropertyInfo> getProperties([BindingFlags2 bindingAttr]) {
+  Map<Symbol, PropertyInfo> getProperties([BindingFlags bindingAttr]) {
     return _Membership.getProperties(this, bindingAttr);
   }
 
-  PropertyInfo getProperty(Symbol name, [BindingFlags2 bindingAttr]) {
+  PropertyInfo getProperty(Symbol name, [BindingFlags bindingAttr]) {
     return _Membership.getProperty(this, name, bindingAttr);
   }
 
-  Map<Symbol, VariableInfo> getVariables([BindingFlags2 bindingAttr]) {
+  Map<Symbol, VariableInfo> getVariables([BindingFlags bindingAttr]) {
     return _Membership.getVariables(this, bindingAttr);
   }
 
-  VariableInfo getVariable(Symbol name, [BindingFlags2 bindingAttr]) {
+  VariableInfo getVariable(Symbol name, [BindingFlags bindingAttr]) {
     return _Membership.getVariable(this, name, bindingAttr);
   }
 

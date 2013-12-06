@@ -29,7 +29,7 @@ class _VariableInfo extends _MemberInfo implements VariableInfo {
 
   bool get isStatic => _mirror.isStatic;
 
-  MemberTypes2 get memberType => MemberTypes2.VARIABLE;
+  MemberTypes get memberType => MemberTypes.VARIABLE;
 
   VariableMirror get mirror => _mirror;
 

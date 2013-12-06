@@ -1,24 +1,24 @@
 part of reflection;
 
-class MemberTypes2 {
-  static const MemberTypes2 CLASS = const MemberTypes2("CLASS", 1);
+class MemberTypes {
+  static const MemberTypes CLASS = const MemberTypes("CLASS", 1);
 
-  static const MemberTypes2 CONSTRUCTOR = const MemberTypes2("CONSTRUCTOR", 2);
+  static const MemberTypes CONSTRUCTOR = const MemberTypes("CONSTRUCTOR", 2);
 
-  static const MemberTypes2 METHOD = const MemberTypes2("METHOD", 4);
+  static const MemberTypes METHOD = const MemberTypes("METHOD", 4);
 
-  static const MemberTypes2 PROPERTY = const MemberTypes2("PROPERTY", 8);
+  static const MemberTypes PROPERTY = const MemberTypes("PROPERTY", 8);
 
-  static const MemberTypes2 VARIABLE = const MemberTypes2("VARIABLE", 16);
+  static const MemberTypes VARIABLE = const MemberTypes("VARIABLE", 16);
 
   final String name;
 
   final int value;
 
-  const MemberTypes2(this.name, this.value);
+  const MemberTypes(this.name, this.value);
 
-  static Map<String, MemberTypes2> get values {
-    return new UnmodifiableMapView<String, MemberTypes2>(
+  static Map<String, MemberTypes> get values {
+    return new UnmodifiableMapView<String, MemberTypes>(
       {CLASS.name : CLASS,
        CONSTRUCTOR.name : CONSTRUCTOR,
        METHOD.name : METHOD,

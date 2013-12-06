@@ -5,7 +5,7 @@ abstract class MemberInfo implements DeclarationInfo {
 
   TypeInfo get declaringType;
 
-  MemberTypes2 get memberType;
+  MemberTypes get memberType;
 }
 
 abstract class _MemberInfo extends _DeclarationInfo implements MemberInfo {

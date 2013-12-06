@@ -29,5 +29,5 @@ class _ConstructorInfo extends _MethodBase implements ConstructorInfo {
 
   bool get isRedirectingConstructor => _mirror.isRedirectingConstructor;
 
-  MemberTypes2 get memberType => MemberTypes2.CONSTRUCTOR;
+  MemberTypes get memberType => MemberTypes.CONSTRUCTOR;
 }

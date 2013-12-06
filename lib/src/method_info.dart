@@ -23,5 +23,5 @@ class _MethodInfo extends _MethodBase implements MethodInfo {
 
   bool get isStatic => _mirror.isStatic;
 
-  MemberTypes2 get memberType => MemberTypes2.METHOD;
+  MemberTypes get memberType => MemberTypes.METHOD;
 }

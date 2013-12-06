@@ -29,7 +29,7 @@ class _PropertyInfo extends _MethodBase implements PropertyInfo {
 
   bool get isStatic => _mirror.isStatic;
 
-  MemberTypes2 get memberType => MemberTypes2.PROPERTY;
+  MemberTypes get memberType => MemberTypes.PROPERTY;
 
   MethodMirror get mirror => _mirror;
 }

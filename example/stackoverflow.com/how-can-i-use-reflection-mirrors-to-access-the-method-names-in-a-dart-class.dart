@@ -9,16 +9,16 @@ void main() {
   var methods = type.getMethods();
   printMembers("All declared and inherited methods", methods);
 
-  methods = type.getMethods(BindingFlags2.PUBLIC | BindingFlags2.PRIVATE | BindingFlags2.INSTANCE | BindingFlags2.PUBLIC | BindingFlags2.STATIC | BindingFlags2.DECLARED_ONLY);
+  methods = type.getMethods(BindingFlags.PUBLIC | BindingFlags.PRIVATE | BindingFlags.INSTANCE | BindingFlags.PUBLIC | BindingFlags.STATIC | BindingFlags.DECLARED_ONLY);
   printMembers("All declared methods", methods);
 
-  methods = type.getMethods(BindingFlags2.PUBLIC | BindingFlags2.INSTANCE);
+  methods = type.getMethods(BindingFlags.PUBLIC | BindingFlags.INSTANCE);
   printMembers("Public instance methods", methods);
 
-  methods = type.getMethods(BindingFlags2.PRIVATE | BindingFlags2.INSTANCE);
+  methods = type.getMethods(BindingFlags.PRIVATE | BindingFlags.INSTANCE);
   printMembers("Private instance methods", methods);
 
-  methods = type.getMethods(BindingFlags2.PUBLIC | BindingFlags2.PRIVATE | BindingFlags2.STATIC);
+  methods = type.getMethods(BindingFlags.PUBLIC | BindingFlags.PRIVATE | BindingFlags.STATIC);
   printMembers("Static methods", methods);
 }
 

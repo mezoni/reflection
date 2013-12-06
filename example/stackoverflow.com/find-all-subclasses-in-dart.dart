@@ -17,7 +17,7 @@ List<String> findAllSubclasses(TypeInfo type) {
   var typeOrig = type.originalDeclaration;
   var libraries = MirrorSystemInfo.current.isolate.libraries;
   for(var library in libraries.values) {
-    var classes = library.getClasses(BindingFlags2.PRIVATE | BindingFlags2.PUBLIC);
+    var classes = library.getClasses(BindingFlags.PRIVATE | BindingFlags.PUBLIC);
     for(var clazz in classes.values) {
       // Skip itself
       if(clazz.originalDeclaration == typeOrig) {
