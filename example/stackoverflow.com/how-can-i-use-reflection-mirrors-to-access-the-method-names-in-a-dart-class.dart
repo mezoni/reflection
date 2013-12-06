@@ -3,22 +3,22 @@
 import 'package:reflection/reflection.dart';
 
 void main() {
-  var type = int;
+  var type = typeInfo(int);
   print("==========================");
   print("Class $type:");
-  var methods = TypeHelper.getMethods(type);
+  var methods = type.getMethods();
   printMembers("All declared and inherited methods", methods);
 
-  methods = TypeHelper.getMethods(type, inherited: false);
+  methods = type.getMethods(BindingFlags2.PUBLIC | BindingFlags2.PRIVATE | BindingFlags2.INSTANCE | BindingFlags2.PUBLIC | BindingFlags2.STATIC | BindingFlags2.DECLARED_ONLY);
   printMembers("All declared methods", methods);
 
-  methods = TypeHelper.getMethods(type, flags: BindingFlags.INSTANCE | BindingFlags.PUBLIC);
+  methods = type.getMethods(BindingFlags2.PUBLIC | BindingFlags2.INSTANCE);
   printMembers("Public instance methods", methods);
 
-  methods = TypeHelper.getMethods(type, flags: BindingFlags.INSTANCE | BindingFlags.PRIVATE);
+  methods = type.getMethods(BindingFlags2.PRIVATE | BindingFlags2.INSTANCE);
   printMembers("Private instance methods", methods);
 
-  methods = TypeHelper.getMethods(type, flags: BindingFlags.STATIC);
+  methods = type.getMethods(BindingFlags2.PUBLIC | BindingFlags2.PRIVATE | BindingFlags2.STATIC);
   printMembers("Static methods", methods);
 }
 

@@ -5,27 +5,26 @@ import 'package:reflection/reflection.dart';
 
 void main() {
   var type = FileSystemEntity;
-  var result = findAllSubclasses(type);
+  var result = findAllSubclasses(typeInfo(type));
   var text = result.join("\r");
   print("==============================");
   print("Subclasses of '${type}'");
   print(text);
 }
 
-List<String> findAllSubclasses(Type type) {
+List<String> findAllSubclasses(TypeInfo type) {
   var childs = new List<String>();
-  var typeMirror = TypeHelper.getTypeMirror(type);
-  var typeMirrorOrig = typeMirror.originalDeclaration;
-  var libraries = Reflection.getLibraries();
+  var typeOrig = type.originalDeclaration;
+  var libraries = MirrorSystemInfo.current.isolate.libraries;
   for(var library in libraries.values) {
-    var classes = MirrorLibrary.getClasses(library);
+    var classes = library.getClasses(BindingFlags2.PRIVATE | BindingFlags2.PUBLIC);
     for(var clazz in classes.values) {
       // Skip itself
-      if(clazz.originalDeclaration == typeMirrorOrig) {
+      if(clazz.originalDeclaration == typeOrig) {
         continue;
       }
 
-      if(MirrorType.isA(clazz, typeMirror)) {
+      if(clazz.isA(type)) {
         childs.add(SymbolHelper.getName(clazz.simpleName));
       }
     }

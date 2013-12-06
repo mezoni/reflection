@@ -1,17 +1,30 @@
 part of reflection;
 
-class MemberTypes {
-  static const int DEFAULT = 0;
+class MemberTypes2 {
+  static const MemberTypes2 CLASS = const MemberTypes2("CLASS", 1);
 
-  static const int ACCESSOR = 1;
+  static const MemberTypes2 CONSTRUCTOR = const MemberTypes2("CONSTRUCTOR", 2);
 
-  static const int CLASS = 2;
+  static const MemberTypes2 METHOD = const MemberTypes2("METHOD", 4);
 
-  static const int CONSTRUCTOR = 4;
+  static const MemberTypes2 PROPERTY = const MemberTypes2("PROPERTY", 8);
 
-  static const int METHOD = 8;
+  static const MemberTypes2 VARIABLE = const MemberTypes2("VARIABLE", 16);
 
-  static const int VARIABLE = 16;
+  final String name;
 
-  static const int ALL = (VARIABLE << 1) - 1;
+  final int value;
+
+  const MemberTypes2(this.name, this.value);
+
+  static Map<String, MemberTypes2> get values {
+    return new UnmodifiableMapView<String, MemberTypes2>(
+      {CLASS.name : CLASS,
+       CONSTRUCTOR.name : CONSTRUCTOR,
+       METHOD.name : METHOD,
+       PROPERTY.name : PROPERTY,
+       VARIABLE.name : VARIABLE});
+  }
+
+  String toString() => name;
 }

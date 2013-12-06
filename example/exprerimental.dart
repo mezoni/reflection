@@ -37,8 +37,8 @@ List testNativeIs(int count) {
 
 List testTypeInfoIs(int count) {
   var list = new List(count);
-  var type1 = typeinfo(list.runtimeType);
-  var type2 = typeinfo(Iterable);
+  var type1 = typeInfo(list.runtimeType);
+  var type2 = typeInfo(Iterable);
   for(var i = 0; i < count; i++) {
     list[i] = type1.isA(type2);
   }

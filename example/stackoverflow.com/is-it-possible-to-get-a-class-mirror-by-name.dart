@@ -10,9 +10,8 @@ class Question {}
 class Answer {}
 
 void main() {
-  var thisLibrary = Reflection.isolate.rootLibrary;
-  var userMirror = MirrorLibrary.getClass(thisLibrary, #User);
-  var userType = MirrorType.getType(userMirror);
-  var user = TypeHelper.newInstance(userType);
+  var library = MirrorSystemInfo.current.isolate.rootLibrary;
+  var userType = library.getClass(#User);
+  var user = userType.newInstance().reflectee;
   print(user.name);
 }

@@ -5,8 +5,9 @@ import 'package:reflection/reflection.dart';
 
 void main() {
   var myList = new List<File>();
-  var typeListFileSystemEntity = getTypeOfMyInterest();
-  print(TypeHelper.isA(myList.runtimeType, typeListFileSystemEntity));
+  var type1 = typeInfo(myList.runtimeType);
+  var type2 = typeInfo(getTypeOfMyInterest());
+  print(type1.isA(type2));
 }
 
 // Return "List<FileSystemEntity>"

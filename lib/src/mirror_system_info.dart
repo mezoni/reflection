@@ -19,15 +19,11 @@ class _MirrorSystemInfo implements MirrorSystemInfo {
 
   IsolateInfo get isolate {
     if(_isolate == null) {
-      _isolate = _reflectIsolate();
+      _isolate = new _IsolateInfo(mirror : _mirror.isolate, mirrorSystem : this);
     }
 
     return _isolate;
   }
 
   MirrorSystem get mirror => _mirror;
-
-  IsolateInfo _reflectIsolate() {
-    return new _IsolateInfo(reflection : this);
-  }
 }

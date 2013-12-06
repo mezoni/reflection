@@ -3,9 +3,10 @@
 import 'package:reflection/reflection.dart';
 
 void main() {
-  var myClass = TypeHelper.newInstance(MyClass);
-  var myJack = TypeHelper.newInstance(MyClass, #fromJack);
-  var myJohn = TypeHelper.newInstance(MyClass, #fromName, ["John"]);
+  var type = typeInfo(MyClass);
+  var myClass = type.newInstance().reflectee;
+  var myJack = type.newInstance(#fromJack).reflectee;
+  var myJohn = type.newInstance(#fromName, ["John"]).reflectee;
   myClass.sayHello();
   myJack.sayHello();
   myJohn.sayHello();

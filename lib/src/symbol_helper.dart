@@ -1,6 +1,6 @@
 part of reflection;
 
-class SymbolHelper {
+abstract class SymbolHelper {
   static String getName(Symbol symbol) {
     return MirrorSystem.getName(symbol);
   }

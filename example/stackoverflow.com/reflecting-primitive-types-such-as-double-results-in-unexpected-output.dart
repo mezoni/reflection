@@ -5,7 +5,8 @@ import 'package:reflection/reflection.dart';
 void main() {
   test("Double is num", () {
     double d = 10.1;
-    expect(TypeHelper.isA(d.runtimeType, num), true, reason: "${d.runtimeType} is $num");
+    var typeNum = typeInfo(num);
+    expect(typeInfo(d.runtimeType).isA(typeNum), true, reason: "${d.runtimeType} is $num");
   });
 }
 

@@ -1,12 +1,11 @@
-import 'dart:mirrors';
 import 'package:reflection/reflection.dart';
 
 void main() {
-  var me = reflect(new Foo());
-  ClassMirror type = me.getField(#list).type;
-  var iterableType = reflectType(Iterable);
+  var me = objectInfo(new Foo());
+  var type = me.get(#list).type;
+  var iterableType = typeInfo(Iterable);
   // obviously this work, since 'List' is 'Iterable'
-  if(MirrorType.isA(type, iterableType)) {
+  if(type.isA(iterableType)) {
     print("It works because 'List' is 'Iterable'");
   }
 }
