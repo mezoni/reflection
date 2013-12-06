@@ -1,3 +1,5 @@
+// http://stackoverflow.com/questions/19187197/how-to-quickly-test-if-a-typemirror-is-a-subtype-of-another
+
 import 'package:reflection/reflection.dart';
 
 void main() {

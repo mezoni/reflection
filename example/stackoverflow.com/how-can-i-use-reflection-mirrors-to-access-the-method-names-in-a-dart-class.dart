@@ -6,10 +6,10 @@ void main() {
   var type = typeInfo(int);
   print("==========================");
   print("Class $type:");
-  var methods = type.getMethods();
+  var methods = type.getMethods(BindingFlags.PUBLIC | BindingFlags.PRIVATE | BindingFlags.INSTANCE | BindingFlags.STATIC);
   printMembers("All declared and inherited methods", methods);
 
-  methods = type.getMethods(BindingFlags.PUBLIC | BindingFlags.PRIVATE | BindingFlags.INSTANCE | BindingFlags.PUBLIC | BindingFlags.STATIC | BindingFlags.DECLARED_ONLY);
+  methods = type.getMethods(BindingFlags.PUBLIC | BindingFlags.PRIVATE | BindingFlags.INSTANCE  | BindingFlags.STATIC | BindingFlags.DECLARED_ONLY);
   printMembers("All declared methods", methods);
 
   methods = type.getMethods(BindingFlags.PUBLIC | BindingFlags.INSTANCE);
