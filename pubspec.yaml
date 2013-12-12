@@ -1,7 +1,7 @@
 name: reflection
 author: Andrew Mezoni <andrew.mezoni@gmail.com>
-version: 0.0.11
+version: 0.0.12
 homepage: https://github.com/mezoni/reflection
 description: The reflection helper class over the mirrors based reflection.
 dependencies:
-  unmodifiable_collection: any
+  collection_helpers: any

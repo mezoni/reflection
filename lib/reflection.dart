@@ -2,7 +2,7 @@ library reflection;
 
 import 'dart:collection';
 import 'dart:mirrors';
-import 'package:unmodifiable_collection/unmodifiable_collection.dart';
+import 'package:collection_helpers/wrappers.dart';
 
 part 'src/binding_flags.dart';
 part 'src/constructor_info.dart';
