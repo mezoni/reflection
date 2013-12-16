@@ -1,7 +1,7 @@
 part of reflection;
 
 abstract class IsolateInfo implements MirrorInfo {
-  Map<Uri, LibraryInfo> get libraries;
+  IDictionary<Uri, LibraryInfo> get libraries;
 
   LibraryInfo get rootLibrary;
 
@@ -11,7 +11,7 @@ abstract class IsolateInfo implements MirrorInfo {
 }
 
 class _IsolateInfo extends _MirrorInfo implements IsolateInfo {
-  Map<Uri, LibraryInfo> _libraries;
+  Dictionary<Uri, LibraryInfo> _libraries;
 
   IsolateMirror _mirror;
 
@@ -27,16 +27,14 @@ class _IsolateInfo extends _MirrorInfo implements IsolateInfo {
     _mirrorSystem = mirrorSystem;
   }
 
-  Map<Uri, LibraryInfo> get libraries {
+  IDictionary<Uri, LibraryInfo> get libraries {
     if(_libraries == null) {
-      var libraries = new HashMap<Uri, LibraryInfo>();
+      _libraries = new Dictionary<Uri, LibraryInfo>();
       var id = 0;
       for(var mirror in _mirrorSystem.mirror.libraries.values) {
         var library = new _LibraryInfo(id : id++, mirror : mirror);
-        libraries[mirror.uri] = library;
+        _libraries[mirror.uri] = library;
       }
-
-      _libraries = new UnmodifiableMapView<Uri, LibraryInfo>(libraries);
     }
 
     return _libraries;

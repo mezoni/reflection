@@ -13,22 +13,10 @@ void main() {
 }
 
 List<String> findAllSubclasses(TypeInfo type) {
-  var childs = new List<String>();
   var typeOrig = type.originalDeclaration;
-  var libraries = MirrorSystemInfo.current.isolate.libraries;
-  for(var library in libraries.values) {
-    var classes = library.getClasses(BindingFlags.PRIVATE | BindingFlags.PUBLIC);
-    for(var clazz in classes.values) {
-      // Skip itself
-      if(clazz.originalDeclaration == typeOrig) {
-        continue;
-      }
-
-      if(clazz.isA(type)) {
-        childs.add(SymbolHelper.getName(clazz.simpleName));
-      }
-    }
-  }
-
-  return childs;
+  var childs = MirrorSystemInfo.current.isolate.libraries.values
+    .select((library) => library.getClasses(BindingFlags.PRIVATE | BindingFlags.PUBLIC).values)
+    .selectMany((clazz) => clazz)
+    .where((clazz) => clazz.isA(type) && clazz.originalDeclaration != typeOrig);
+  return childs.toList();
 }

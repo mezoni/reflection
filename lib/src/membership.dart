@@ -3,25 +3,25 @@ part of reflection;
 abstract class Membership {
   TypeInfo getClass(Symbol name, [BindingFlags bindingAttr]);
 
-  Map<Symbol, TypeInfo> getClasses([BindingFlags bindingAttr]);
+  IDictionary<Symbol, TypeInfo> getClasses([BindingFlags bindingAttr]);
 
   ConstructorInfo getConstructor(Symbol name, [BindingFlags bindingAttr]);
 
-  Map<Symbol, ConstructorInfo> getConstructors([BindingFlags bindingAttr]);
+  IDictionary<Symbol, ConstructorInfo> getConstructors([BindingFlags bindingAttr]);
 
   MemberInfo getMember(Symbol name, [BindingFlags bindingAttr]);
 
-  Map<Symbol, MemberInfo> getMembers([BindingFlags bindingAttr]);
+  IDictionary<Symbol, MemberInfo> getMembers([BindingFlags bindingAttr]);
 
   MethodInfo getMethod(Symbol name, [BindingFlags bindingAttr]);
 
-  Map<Symbol, MethodInfo> getMethods([BindingFlags bindingAttr]);
+  IDictionary<Symbol, MethodInfo> getMethods([BindingFlags bindingAttr]);
 
-  Map<Symbol, PropertyInfo> getProperties([BindingFlags bindingAttr]);
+  IDictionary<Symbol, PropertyInfo> getProperties([BindingFlags bindingAttr]);
 
   PropertyInfo getProperty(Symbol name, [BindingFlags bindingAttr]);
 
-  Map<Symbol, VariableInfo> getVariables([BindingFlags bindingAttr]);
+  IDictionary<Symbol, VariableInfo> getVariables([BindingFlags bindingAttr]);
 
   VariableInfo getVariable(Symbol name, [BindingFlags bindingAttr]);
 }
@@ -38,7 +38,7 @@ class _Membership {
     return _getMembers(owner, name, bindingAttr)[name];
   }
 
-  static Map<Symbol, TypeInfo> getClasses(HasMembers owner, [BindingFlags bindingAttr]) {
+  static Dictionary<Symbol, TypeInfo> getClasses(HasMembers owner, [BindingFlags bindingAttr]) {
     if(bindingAttr == null) {
       bindingAttr = BindingFlags.PUBLIC | BindingFlags.GET_CLASS;
     } else {
@@ -46,7 +46,7 @@ class _Membership {
       bindingAttr |= BindingFlags.GET_CLASS;
     }
 
-    return new UnmodifiableMapView<Symbol, TypeInfo>(_getMembers(owner, null, bindingAttr));
+    return new Dictionary<Symbol, TypeInfo>.fromDictionary(_getMembers(owner, null, bindingAttr));
   }
 
   static ConstructorInfo getConstructor(HasMembers owner, Symbol name, [BindingFlags bindingAttr]) {
@@ -60,7 +60,7 @@ class _Membership {
     return _getMembers(owner, name, bindingAttr)[name];
   }
 
-  static Map<Symbol, ConstructorInfo> getConstructors(HasMembers owner, [BindingFlags bindingAttr]) {
+  static Dictionary<Symbol, ConstructorInfo> getConstructors(HasMembers owner, [BindingFlags bindingAttr]) {
     if(bindingAttr == null) {
       bindingAttr = BindingFlags.PUBLIC | BindingFlags.INSTANCE | BindingFlags.GET_CONSTRUCTOR;
     } else {
@@ -68,7 +68,7 @@ class _Membership {
       bindingAttr |= BindingFlags.INSTANCE | BindingFlags.GET_CONSTRUCTOR;
     }
 
-    return new UnmodifiableMapView<Symbol, ConstructorInfo>(_getMembers(owner, null, bindingAttr));
+    return new Dictionary<Symbol, ConstructorInfo>.fromDictionary(_getMembers(owner, null, bindingAttr));
   }
 
   static MemberInfo getMember(HasMembers owner, Symbol name, [BindingFlags bindingAttr]) {
@@ -79,12 +79,12 @@ class _Membership {
     return _getMembers(owner, name, bindingAttr)[name];
   }
 
-  static Map<Symbol, MemberInfo> getMembers(HasMembers owner, [BindingFlags bindingAttr]) {
+  static Dictionary<Symbol, MemberInfo> getMembers(HasMembers owner, [BindingFlags bindingAttr]) {
     if(bindingAttr == null) {
       bindingAttr = BindingFlags.PUBLIC | BindingFlags.INSTANCE | BindingFlags.STATIC;
     }
 
-    return new UnmodifiableMapView<Symbol, MemberInfo>(_getMembers(owner, null, bindingAttr));
+    return new Dictionary<Symbol, MemberInfo>.fromDictionary(_getMembers(owner, null, bindingAttr));
   }
 
   static MethodInfo getMethod(HasMembers owner, Symbol name, [BindingFlags bindingAttr]) {
@@ -98,7 +98,7 @@ class _Membership {
     return _getMembers(owner, name, bindingAttr)[name];
   }
 
-  static Map<Symbol, MethodInfo> getMethods(HasMembers owner, [BindingFlags bindingAttr]) {
+  static Dictionary<Symbol, MethodInfo> getMethods(HasMembers owner, [BindingFlags bindingAttr]) {
     if(bindingAttr == null) {
       bindingAttr = BindingFlags.PUBLIC | BindingFlags.INSTANCE | BindingFlags.STATIC | BindingFlags.GET_METHOD;
     } else {
@@ -106,7 +106,7 @@ class _Membership {
       bindingAttr |= BindingFlags.GET_METHOD;
     }
 
-    return new UnmodifiableMapView<Symbol, MethodInfo>(_getMembers(owner, null, bindingAttr));
+    return new Dictionary<Symbol, MethodInfo>.fromDictionary(_getMembers(owner, null, bindingAttr));
   }
 
   static PropertyInfo getProperty(HasMembers owner, Symbol name, [BindingFlags bindingAttr]) {
@@ -120,7 +120,7 @@ class _Membership {
     return _getMembers(owner, name, bindingAttr)[name];
   }
 
-  static Map<Symbol, PropertyInfo> getProperties(HasMembers owner, [BindingFlags bindingAttr]) {
+  static Dictionary<Symbol, PropertyInfo> getProperties(HasMembers owner, [BindingFlags bindingAttr]) {
     if(bindingAttr == null) {
       bindingAttr = BindingFlags.PUBLIC | BindingFlags.INSTANCE | BindingFlags.STATIC | BindingFlags.GET_PROPERTY;
     } else {
@@ -128,7 +128,7 @@ class _Membership {
       bindingAttr |= BindingFlags.GET_PROPERTY;
     }
 
-    return new UnmodifiableMapView<Symbol, PropertyInfo>(_getMembers(owner, null, bindingAttr));
+    return new Dictionary<Symbol, PropertyInfo>.fromDictionary(_getMembers(owner, null, bindingAttr));
   }
 
   static VariableInfo getVariable(HasMembers owner, Symbol name, [BindingFlags bindingAttr]) {
@@ -142,7 +142,7 @@ class _Membership {
     return _getMembers(owner, name, bindingAttr)[name];
   }
 
-  static Map<Symbol, VariableInfo> getVariables(HasMembers owner, [BindingFlags bindingAttr]) {
+  static Dictionary<Symbol, VariableInfo> getVariables(HasMembers owner, [BindingFlags bindingAttr]) {
     if(bindingAttr == null) {
       bindingAttr = BindingFlags.PUBLIC | BindingFlags.INSTANCE | BindingFlags.STATIC | BindingFlags.GET_VARIABLE;
     } else {
@@ -150,10 +150,10 @@ class _Membership {
       bindingAttr |= BindingFlags.GET_VARIABLE;
     }
 
-    return new UnmodifiableMapView<Symbol, VariableInfo>(_getMembers(owner, null, bindingAttr));
+    return new Dictionary<Symbol, VariableInfo>.fromDictionary(_getMembers(owner, null, bindingAttr));
   }
 
-  static Map<Symbol, MemberInfo> _getMembers(HasMembers owner, Symbol name, [BindingFlags bindingAttr]) {
+  static Dictionary<Symbol, dynamic> _getMembers(HasMembers owner, Symbol name, [BindingFlags bindingAttr]) {
     if(owner == null) {
       throw new ArgumentError("owner: $owner");
     }
@@ -167,10 +167,10 @@ class _Membership {
     }
 
     LibraryInfo library;
-    Map<Symbol, MemberInfo> members;
+    Dictionary<Symbol, MemberInfo> members;
     if(owner is TypeInfo) {
       library = owner.library;
-      members = new Map<Symbol, MemberInfo>();
+      members = new Dictionary<Symbol, MemberInfo>();
       if((bindingAttr & BindingFlags.DECLARED_ONLY) == 0) {
         var types = new List<TypeInfo>();
         var type = owner;
@@ -182,7 +182,10 @@ class _Membership {
         var length = types.length;
         for(var i = length - 1; i >= 0; i--) {
           var type = types[i];
-          members.addAll(type.members);
+          for(var member in type.members) {
+            members.add(member);
+          }
+
         }
       } else {
         members = owner.members;
@@ -194,11 +197,11 @@ class _Membership {
 
     if(name != null) {
       var member = members[name];
-      members = new Map<Symbol, MemberInfo>();
+      members = new Dictionary<Symbol, MemberInfo>();
       members[name] = member;
     }
 
-    var result = new Map<Symbol, dynamic>();
+    var result = new Dictionary<Symbol, dynamic>();
     for(var member in members.values) {
       var accepted = false;
       switch(member.memberType) {

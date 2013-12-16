@@ -7,7 +7,7 @@ abstract class LibraryInfo implements DeclarationInfo, HasMembers, Membership, O
 
   LibraryMirror get mirror;
 
-  Map<Symbol, TypeInfo> get types;
+  IDictionary<Symbol, TypeInfo> get types;
 
   Uri get uri;
 }
@@ -19,11 +19,11 @@ class _LibraryInfo extends _DeclarationInfo implements LibraryInfo {
 
   IsolateInfo _isolate;
 
-  Map<Symbol, MemberInfo> _members;
+  Dictionary<Symbol, MemberInfo> _members;
 
   LibraryMirror _mirror;
 
-  Map<Symbol, TypeInfo> _types;
+  Dictionary<Symbol, TypeInfo> _types;
 
   _LibraryInfo({int id, IsolateInfo isolate, LibraryMirror mirror}) : super(mirror : mirror) {
     _id = id;
@@ -47,9 +47,9 @@ class _LibraryInfo extends _DeclarationInfo implements LibraryInfo {
 
   LibraryMirror get mirror => _mirror;
 
-  Map<Symbol, MemberInfo> get members {
+  Dictionary<Symbol, MemberInfo> get members {
     if(_members == null) {
-      var members = new Map<Symbol, MemberInfo>();
+      _members = new Dictionary<Symbol, MemberInfo>();
       for(var mirror in _mirror.declarations.values) {
         MemberInfo member;
         var unsupported = false;
@@ -74,26 +74,22 @@ class _LibraryInfo extends _DeclarationInfo implements LibraryInfo {
         if(unsupported) {
           // throw new StateError("Unsupported declaration type '${mirror.runtimeType}'");
         } else {
-          members[member.simpleName] = member;
+          _members[member.simpleName] = member;
         }
       }
-
-      _members = new UnmodifiableMapView<Symbol, MemberInfo>(members);
     }
 
     return _members;
   }
 
-  Map<Symbol, TypeInfo> get types {
+  Dictionary<Symbol, TypeInfo> get types {
     if(_types == null) {
-      var types = new HashMap<Symbol, TypeInfo>();
+      _types = new Dictionary<Symbol, TypeInfo>();
       for(var declaration in _mirror.declarations.values) {
         if(declaration is TypeMirror) {
           types[declaration.simpleName] = new _TypeInfo(library : this, mirror : declaration);
         }
       }
-
-      _types = new UnmodifiableMapView<Symbol, TypeInfo>(types);
     }
 
     return _types;
@@ -125,7 +121,7 @@ class _LibraryInfo extends _DeclarationInfo implements LibraryInfo {
     return _Membership.getClass(this, name, bindingAttr);
   }
 
-  Map<Symbol, TypeInfo> getClasses([BindingFlags bindingAttr]) {
+  Dictionary<Symbol, TypeInfo> getClasses([BindingFlags bindingAttr]) {
     return _Membership.getClasses(this, bindingAttr);
   }
 
@@ -133,7 +129,7 @@ class _LibraryInfo extends _DeclarationInfo implements LibraryInfo {
     return _Membership.getConstructor(this, name, bindingAttr);
   }
 
-  Map<Symbol, ConstructorInfo> getConstructors([BindingFlags bindingAttr]) {
+  Dictionary<Symbol, ConstructorInfo> getConstructors([BindingFlags bindingAttr]) {
     return _Membership.getConstructors(this, bindingAttr);
   }
 
@@ -141,7 +137,7 @@ class _LibraryInfo extends _DeclarationInfo implements LibraryInfo {
     return _Membership.getMember(this, name, bindingAttr);
   }
 
-  Map<Symbol, MemberInfo> getMembers([BindingFlags bindingAttr]) {
+  Dictionary<Symbol, MemberInfo> getMembers([BindingFlags bindingAttr]) {
     return _Membership.getMembers(this, bindingAttr);
   }
 
@@ -149,11 +145,11 @@ class _LibraryInfo extends _DeclarationInfo implements LibraryInfo {
     return _Membership.getMethod(this, name, bindingAttr);
   }
 
-  Map<Symbol, MethodInfo> getMethods([BindingFlags bindingAttr]) {
+  Dictionary<Symbol, MethodInfo> getMethods([BindingFlags bindingAttr]) {
     return _Membership.getMethods(this, bindingAttr);
   }
 
-  Map<Symbol, PropertyInfo> getProperties([BindingFlags bindingAttr]) {
+  Dictionary<Symbol, PropertyInfo> getProperties([BindingFlags bindingAttr]) {
     return _Membership.getProperties(this, bindingAttr);
   }
 
@@ -161,7 +157,7 @@ class _LibraryInfo extends _DeclarationInfo implements LibraryInfo {
     return _Membership.getProperty(this, name, bindingAttr);
   }
 
-  Map<Symbol, VariableInfo> getVariables([BindingFlags bindingAttr]) {
+  Dictionary<Symbol, VariableInfo> getVariables([BindingFlags bindingAttr]) {
     return _Membership.getVariables(this, bindingAttr);
   }
 

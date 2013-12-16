@@ -7,7 +7,7 @@ abstract class DeclarationInfo implements MirrorInfo {
 
   bool get isTopLevel;
 
-  List<InstanceInfo> get metadata;
+  IReadOnlyCollection<InstanceInfo> get metadata;
 
   DeclarationInfo get owner;
 
@@ -17,7 +17,7 @@ abstract class DeclarationInfo implements MirrorInfo {
 }
 
 class _DeclarationInfo extends _MirrorInfo implements DeclarationInfo {
-  List<InstanceInfo> _metadata;
+  ReadOnlyCollection<InstanceInfo> _metadata;
 
   DeclarationMirror _mirror;
 
@@ -33,14 +33,14 @@ class _DeclarationInfo extends _MirrorInfo implements DeclarationInfo {
 
   bool get isTopLevel => _mirror.isTopLevel;
 
-  List<InstanceInfo> get metadata {
+  ReadOnlyCollection<InstanceInfo> get metadata {
     if(_metadata == null) {
       List<InstanceInfo> metadata = new List<InstanceInfo>();
       for(var instance in _mirror.metadata) {
         metadata.add(new _InstanceInfo(mirror: instance));
       }
 
-      _metadata = new UnmodifiableListView(metadata);
+      _metadata = new ReadOnlyCollection(metadata);
     }
 
     return _metadata;

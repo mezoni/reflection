@@ -3,6 +3,7 @@ library reflection;
 import 'dart:collection';
 import 'dart:mirrors';
 import 'package:collection_helpers/wrappers.dart';
+import 'package:queries/collections.dart';
 
 part 'src/binding_flags.dart';
 part 'src/constructor_info.dart';

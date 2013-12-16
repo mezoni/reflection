@@ -58,7 +58,7 @@ class _TypeInfo extends _MemberInfo implements TypeInfo {
 
   static int _lastId = 0;
 
-  static Map<Uri, LibraryInfo> _libraries = MirrorSystemInfo.current.isolate.libraries;
+  static Dictionary<Uri, LibraryInfo> _libraries = MirrorSystemInfo.current.isolate.libraries;
 
   static TypeInfo _objectInfo = typeInfo(Object);
 
@@ -78,7 +78,7 @@ class _TypeInfo extends _MemberInfo implements TypeInfo {
 
   LibraryInfo _library;
 
-  Map<Symbol, MemberInfo> _members;
+  Dictionary<Symbol, MemberInfo> _members;
 
   TypeMirror _mirror;
 
@@ -164,9 +164,9 @@ class _TypeInfo extends _MemberInfo implements TypeInfo {
 
   bool get isOriginalDeclaration => _isOriginalDeclaration;
 
-  Map<Symbol, MemberInfo> get members {
+  Dictionary<Symbol, MemberInfo> get members {
     if(_members == null && (_flag & _FLAG_HAS_NO_MEMBERS) == 0) {
-      var members = new Map<Symbol, MemberInfo>();
+      _members = new Dictionary<Symbol, MemberInfo>();
       if(_classMirror != null) {
         for(var mirror in _classMirror.declarations.values) {
           MemberInfo member;
@@ -192,14 +192,12 @@ class _TypeInfo extends _MemberInfo implements TypeInfo {
           if(unsupported) {
             // throw new StateError("Unsupported declaration type '${mirror.runtimeType}'");
           } else {
-            members[member.simpleName] = member;
+            _members[member.simpleName] = member;
           }
         }
       } else {
         _flag |= _FLAG_HAS_NO_MEMBERS;
       }
-
-      _members = new UnmodifiableMapView<Symbol, MemberInfo>(members);
     }
 
     return _members;
@@ -280,7 +278,7 @@ class _TypeInfo extends _MemberInfo implements TypeInfo {
     return _Membership.getClass(this, name, bindingAttr);
   }
 
-  Map<Symbol, TypeInfo> getClasses([BindingFlags bindingAttr]) {
+  Dictionary<Symbol, TypeInfo> getClasses([BindingFlags bindingAttr]) {
     return _Membership.getClasses(this, bindingAttr);
   }
 
@@ -288,7 +286,7 @@ class _TypeInfo extends _MemberInfo implements TypeInfo {
     return _Membership.getConstructor(this, name, bindingAttr);
   }
 
-  Map<Symbol, ConstructorInfo> getConstructors([BindingFlags bindingAttr]) {
+  Dictionary<Symbol, ConstructorInfo> getConstructors([BindingFlags bindingAttr]) {
     return _Membership.getConstructors(this, bindingAttr);
   }
 
@@ -296,7 +294,7 @@ class _TypeInfo extends _MemberInfo implements TypeInfo {
     return _Membership.getMember(this, name, bindingAttr);
   }
 
-  Map<Symbol, MemberInfo> getMembers([BindingFlags bindingAttr]) {
+  Dictionary<Symbol, MemberInfo> getMembers([BindingFlags bindingAttr]) {
     return _Membership.getMembers(this, bindingAttr);
   }
 
@@ -304,11 +302,11 @@ class _TypeInfo extends _MemberInfo implements TypeInfo {
     return _Membership.getMethod(this, name, bindingAttr);
   }
 
-  Map<Symbol, MethodInfo> getMethods([BindingFlags bindingAttr]) {
+  Dictionary<Symbol, MethodInfo> getMethods([BindingFlags bindingAttr]) {
     return _Membership.getMethods(this, bindingAttr);
   }
 
-  Map<Symbol, PropertyInfo> getProperties([BindingFlags bindingAttr]) {
+  Dictionary<Symbol, PropertyInfo> getProperties([BindingFlags bindingAttr]) {
     return _Membership.getProperties(this, bindingAttr);
   }
 
@@ -316,7 +314,7 @@ class _TypeInfo extends _MemberInfo implements TypeInfo {
     return _Membership.getProperty(this, name, bindingAttr);
   }
 
-  Map<Symbol, VariableInfo> getVariables([BindingFlags bindingAttr]) {
+  Dictionary<Symbol, VariableInfo> getVariables([BindingFlags bindingAttr]) {
     return _Membership.getVariables(this, bindingAttr);
   }
 

@@ -1,5 +1,6 @@
 // http://stackoverflow.com/questions/17021327/how-do-i-get-all-fields-for-a-class-in-dart
 
+import 'package:queries/collections.dart';
 import 'package:reflection/reflection.dart';
 
 void main() {
@@ -38,7 +39,7 @@ void reflectTypeMembers() {
   }
 }
 
-void printMembers(String title, Map declarations) {
+void printMembers(String title, Dictionary declarations) {
   print(" ------------------------");
   print(" $title:");
   for(var declaration in declarations.values) {
