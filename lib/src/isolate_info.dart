@@ -1,7 +1,7 @@
 part of reflection;
 
 abstract class IsolateInfo implements MirrorInfo {
-  IDictionary<Uri, LibraryInfo> get libraries;
+  ReadOnlyDictionary<Uri, LibraryInfo> get libraries;
 
   LibraryInfo get rootLibrary;
 
@@ -11,7 +11,7 @@ abstract class IsolateInfo implements MirrorInfo {
 }
 
 class _IsolateInfo extends _MirrorInfo implements IsolateInfo {
-  Dictionary<Uri, LibraryInfo> _libraries;
+  ReadOnlyDictionary<Uri, LibraryInfo> _libraries;
 
   IsolateMirror _mirror;
 
@@ -27,14 +27,16 @@ class _IsolateInfo extends _MirrorInfo implements IsolateInfo {
     _mirrorSystem = mirrorSystem;
   }
 
-  IDictionary<Uri, LibraryInfo> get libraries {
+  ReadOnlyDictionary<Uri, LibraryInfo> get libraries {
     if(_libraries == null) {
-      _libraries = new Dictionary<Uri, LibraryInfo>();
+      var libraries = new Dictionary<Uri, LibraryInfo>();
       var id = 0;
       for(var mirror in _mirrorSystem.mirror.libraries.values) {
         var library = new _LibraryInfo(id : id++, mirror : mirror);
-        _libraries[mirror.uri] = library;
+        libraries[mirror.uri] = library;
       }
+
+      _libraries = new ReadOnlyDictionary(libraries);
     }
 
     return _libraries;

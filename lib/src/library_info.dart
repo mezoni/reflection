@@ -7,7 +7,7 @@ abstract class LibraryInfo implements DeclarationInfo, HasMembers, Membership, O
 
   LibraryMirror get mirror;
 
-  IDictionary<Symbol, TypeInfo> get types;
+  ReadOnlyDictionary<Symbol, TypeInfo> get types;
 
   Uri get uri;
 }
@@ -19,11 +19,11 @@ class _LibraryInfo extends _DeclarationInfo implements LibraryInfo {
 
   IsolateInfo _isolate;
 
-  Dictionary<Symbol, MemberInfo> _members;
+  ReadOnlyDictionary<Symbol, MemberInfo> _members;
 
   LibraryMirror _mirror;
 
-  Dictionary<Symbol, TypeInfo> _types;
+  ReadOnlyDictionary<Symbol, TypeInfo> _types;
 
   _LibraryInfo({int id, IsolateInfo isolate, LibraryMirror mirror}) : super(mirror : mirror) {
     _id = id;
@@ -47,9 +47,9 @@ class _LibraryInfo extends _DeclarationInfo implements LibraryInfo {
 
   LibraryMirror get mirror => _mirror;
 
-  Dictionary<Symbol, MemberInfo> get members {
+  ReadOnlyDictionary<Symbol, MemberInfo> get members {
     if(_members == null) {
-      _members = new Dictionary<Symbol, MemberInfo>();
+      var members = new Dictionary<Symbol, MemberInfo>();
       for(var mirror in _mirror.declarations.values) {
         MemberInfo member;
         var unsupported = false;
@@ -74,22 +74,26 @@ class _LibraryInfo extends _DeclarationInfo implements LibraryInfo {
         if(unsupported) {
           // throw new StateError("Unsupported declaration type '${mirror.runtimeType}'");
         } else {
-          _members[member.simpleName] = member;
+          members[member.simpleName] = member;
         }
       }
+
+      _members = new ReadOnlyDictionary(members);
     }
 
     return _members;
   }
 
-  Dictionary<Symbol, TypeInfo> get types {
+  ReadOnlyDictionary<Symbol, TypeInfo> get types {
     if(_types == null) {
-      _types = new Dictionary<Symbol, TypeInfo>();
+      var types = new Dictionary<Symbol, TypeInfo>();
       for(var declaration in _mirror.declarations.values) {
         if(declaration is TypeMirror) {
           types[declaration.simpleName] = new _TypeInfo(library : this, mirror : declaration);
         }
       }
+
+      _types = new ReadOnlyDictionary(types);
     }
 
     return _types;

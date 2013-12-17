@@ -14,6 +14,8 @@ void main() {
 
 List<String> findAllSubclasses(TypeInfo type) {
   var typeOrig = type.originalDeclaration;
+  var v = MirrorSystemInfo.current.isolate.libraries.values;
+
   var childs = MirrorSystemInfo.current.isolate.libraries.values
     .select((library) => library.getClasses(BindingFlags.PRIVATE | BindingFlags.PUBLIC).values)
     .selectMany((clazz) => clazz)

@@ -3,25 +3,25 @@ part of reflection;
 abstract class Membership {
   TypeInfo getClass(Symbol name, [BindingFlags bindingAttr]);
 
-  IDictionary<Symbol, TypeInfo> getClasses([BindingFlags bindingAttr]);
+  Dictionary<Symbol, TypeInfo> getClasses([BindingFlags bindingAttr]);
 
   ConstructorInfo getConstructor(Symbol name, [BindingFlags bindingAttr]);
 
-  IDictionary<Symbol, ConstructorInfo> getConstructors([BindingFlags bindingAttr]);
+  Dictionary<Symbol, ConstructorInfo> getConstructors([BindingFlags bindingAttr]);
 
   MemberInfo getMember(Symbol name, [BindingFlags bindingAttr]);
 
-  IDictionary<Symbol, MemberInfo> getMembers([BindingFlags bindingAttr]);
+  Dictionary<Symbol, MemberInfo> getMembers([BindingFlags bindingAttr]);
 
   MethodInfo getMethod(Symbol name, [BindingFlags bindingAttr]);
 
-  IDictionary<Symbol, MethodInfo> getMethods([BindingFlags bindingAttr]);
+  Dictionary<Symbol, MethodInfo> getMethods([BindingFlags bindingAttr]);
 
-  IDictionary<Symbol, PropertyInfo> getProperties([BindingFlags bindingAttr]);
+  Dictionary<Symbol, PropertyInfo> getProperties([BindingFlags bindingAttr]);
 
   PropertyInfo getProperty(Symbol name, [BindingFlags bindingAttr]);
 
-  IDictionary<Symbol, VariableInfo> getVariables([BindingFlags bindingAttr]);
+  Dictionary<Symbol, VariableInfo> getVariables([BindingFlags bindingAttr]);
 
   VariableInfo getVariable(Symbol name, [BindingFlags bindingAttr]);
 }
@@ -188,11 +188,11 @@ class _Membership {
 
         }
       } else {
-        members = owner.members;
+        members = new Dictionary.fromDictionary(owner.members);
       }
     } else if (owner is LibraryInfo) {
       library = owner;
-      members = owner.members;
+      members = new Dictionary.fromDictionary(owner.members);
     }
 
     if(name != null) {

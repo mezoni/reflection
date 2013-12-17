@@ -58,7 +58,7 @@ class _TypeInfo extends _MemberInfo implements TypeInfo {
 
   static int _lastId = 0;
 
-  static Dictionary<Uri, LibraryInfo> _libraries = MirrorSystemInfo.current.isolate.libraries;
+  static ReadOnlyDictionary<Uri, LibraryInfo> _libraries = MirrorSystemInfo.current.isolate.libraries;
 
   static TypeInfo _objectInfo = typeInfo(Object);
 
@@ -78,7 +78,7 @@ class _TypeInfo extends _MemberInfo implements TypeInfo {
 
   LibraryInfo _library;
 
-  Dictionary<Symbol, MemberInfo> _members;
+  ReadOnlyDictionary<Symbol, MemberInfo> _members;
 
   TypeMirror _mirror;
 
@@ -164,9 +164,9 @@ class _TypeInfo extends _MemberInfo implements TypeInfo {
 
   bool get isOriginalDeclaration => _isOriginalDeclaration;
 
-  Dictionary<Symbol, MemberInfo> get members {
+  ReadOnlyDictionary<Symbol, MemberInfo> get members {
     if(_members == null && (_flag & _FLAG_HAS_NO_MEMBERS) == 0) {
-      _members = new Dictionary<Symbol, MemberInfo>();
+      var members = new Dictionary<Symbol, MemberInfo>();
       if(_classMirror != null) {
         for(var mirror in _classMirror.declarations.values) {
           MemberInfo member;
@@ -192,12 +192,14 @@ class _TypeInfo extends _MemberInfo implements TypeInfo {
           if(unsupported) {
             // throw new StateError("Unsupported declaration type '${mirror.runtimeType}'");
           } else {
-            _members[member.simpleName] = member;
+            members[member.simpleName] = member;
           }
         }
       } else {
         _flag |= _FLAG_HAS_NO_MEMBERS;
       }
+
+      _members = new ReadOnlyDictionary(members);
     }
 
     return _members;
