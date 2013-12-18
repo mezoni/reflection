@@ -3,4 +3,4 @@ Reflection
 
 The reflection helper classes over the mirrors based reflection.
 
-Version 0.0.15
+Version 0.0.16

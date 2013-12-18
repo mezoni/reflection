@@ -6,6 +6,7 @@ import 'package:collection_helpers/wrappers.dart';
 import 'package:queries/collections.dart';
 
 part 'src/binding_flags.dart';
+part 'src/closure_info.dart';
 part 'src/constructor_info.dart';
 part 'src/declaration_info.dart';
 part 'src/has_members.dart';

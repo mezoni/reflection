@@ -1,7 +1,7 @@
 part of reflection;
 
 InstanceInfo objectInfo(dynamic object) {
-  return new _InstanceInfo(mirror : reflect(object));
+  return new _InstanceInfo.fromMirror(reflect(object));
 }
 
 abstract class InstanceInfo implements ObjectInfo {
@@ -24,6 +24,18 @@ class _InstanceInfo extends _ObjectInfo implements InstanceInfo {
   InstanceMirror _mirror;
 
   TypeInfo _type;
+
+  factory _InstanceInfo.fromMirror(InstanceMirror mirror) {
+    if(mirror == null) {
+      throw new ArgumentError("mirror: $mirror");
+    }
+
+    if(mirror is ClosureMirror) {
+      return new _ClosureInfo(mirror: mirror);
+    }
+
+    return new _InstanceInfo(mirror : mirror);
+  }
 
   _InstanceInfo({InstanceMirror mirror}) : super(mirror : mirror);
 
