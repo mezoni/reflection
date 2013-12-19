@@ -168,23 +168,16 @@ class _TypeInfo extends _MemberInfo implements TypeInfo {
     if(_members == null && (_flag & _FLAG_HAS_NO_MEMBERS) == 0) {
       var members = new Dictionary<Symbol, MemberInfo>();
       if(_classMirror != null) {
+        var originalDeclaration = this.originalDeclaration;
         for(var mirror in _classMirror.declarations.values) {
           MemberInfo member;
           var unsupported = false;
           if(mirror is MethodMirror) {
-            if(mirror.isConstructor) {
-              member = new _ConstructorInfo(library: library, mirror: mirror, owner : this);
-            } else if(mirror.isSetter || mirror.isGetter) {
-              member = new _PropertyInfo(library: library, mirror: mirror, owner : this);
-            } else if(mirror.isRegularMethod) {
-              member = new _MethodInfo(library: library, mirror: mirror, owner : this);
-            } else {
-              unsupported = true;
-            }
+            member = new _MethodBase.fromMirror(mirror);
           } else if(mirror is ParameterMirror) {
             unsupported = true;
           } else if(mirror is VariableMirror) {
-            member = new _VariableInfo(library: library, mirror: mirror, owner : this);
+            member = new _VariableInfo(declaringType: originalDeclaration, library: library, mirror: mirror, owner : this);
           } else {
             unsupported = true;
           }

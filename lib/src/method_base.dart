@@ -35,6 +35,7 @@ abstract class _MethodBase extends _MemberInfo implements MethodBase {
       TypeInfo type = new _TypeInfo.fromMirror(mirrorOwner);
       declaringType = type.originalDeclaration;
       library = declaringType.library;
+      owner = type;
     }
 
     if(mirror.isRegularMethod) {
