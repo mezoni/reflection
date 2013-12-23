@@ -198,7 +198,9 @@ class _Membership {
     if(name != null) {
       var member = members[name];
       members = new Dictionary<Symbol, MemberInfo>();
-      members[name] = member;
+      if(member != null) {
+        members[name] = member;
+      }
     }
 
     var result = new Dictionary<Symbol, dynamic>();
