@@ -47,6 +47,13 @@ void isA() {
   instance = type1.newInstance().reflectee;
   result = instance is Mixin2<int>;
   printIs(type1, type2, result);
+
+  type1 = MirrorSystemInfo.current.isolate.libraries.values
+    .first((l) => l.simpleName == const Symbol("dart.core"))
+    .getClass(#Map);
+  type2 = typeInfo(Map);
+  result = false;
+  printIs(type1, type2, result);
 }
 
 void printIs(TypeInfo type, TypeInfo other, bool mustBe) {

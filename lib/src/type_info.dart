@@ -355,15 +355,25 @@ class _TypeInfo extends _MemberInfo implements TypeInfo {
         return true;
       }
 
-      var typeArguments = type.typeArguments;
-      var length = typeArguments.length;
-      if(length == 0) {
+      // 'this' is original declaration for 'type'
+      if(id == _originalDeclarationId) {
         return true;
       }
 
+      var typeArguments = type.typeArguments;
       var thisArguments = this.typeArguments;
+      var length1 = typeArguments.length;
+      var length2 = thisArguments.length;
+      if(length1 != length2) {
+        return false;
+      }
+
+      if(length1 == 0) {
+        return true;
+      }
+
       var result = true;
-      for(var i = 0; i < length; i++) {
+      for(var i = 0; i < length1; i++) {
         _TypeInfo argument = thisArguments[i];
         if(!argument.isAssignableFrom(typeArguments[i])) {
           result = false;
