@@ -31,18 +31,18 @@ class BindingFlags {
 
   const BindingFlags(this.name, this.value);
 
-  static final Map<String, BindingFlags> values = new UnmodifiableMapView<String, BindingFlags>({
-    DEFAULT.name : DEFAULT,
-    DECLARED_ONLY.name : DECLARED_ONLY,
-    GET_CLASS.name : GET_CLASS,
-    GET_CONSTRUCTOR.name : GET_CONSTRUCTOR,
-    GET_METHOD.name : GET_METHOD,
-    GET_PROPERTY.name : GET_PROPERTY,
-    GET_VARIABLE.name : GET_VARIABLE,
-    INSTANCE.name : INSTANCE,
-    PRIVATE.name : PRIVATE,
-    PUBLIC.name : PUBLIC,
-    STATIC.name : STATIC});
+  static Map<String, BindingFlags> get values => const {
+    "DEFAULT" : DEFAULT,
+    "DECLARED_ONLY" : DECLARED_ONLY,
+    "GET_CLASS" : GET_CLASS,
+    "GET_CONSTRUCTOR" : GET_CONSTRUCTOR,
+    "GET_METHOD" : GET_METHOD,
+    "GET_PROPERTY" : GET_PROPERTY,
+    "GET_VARIABLE" : GET_VARIABLE,
+    "INSTANCE" : INSTANCE,
+    "PRIVATE" : PRIVATE,
+    "PUBLIC" : PUBLIC,
+    "STATIC" : STATIC};
 
   bool operator ==(dynamic other) {
     if(identical(this, other)) {

@@ -17,14 +17,12 @@ class MemberTypes {
 
   const MemberTypes(this.name, this.value);
 
-  static Map<String, MemberTypes> get values {
-    return new UnmodifiableMapView<String, MemberTypes>(
-      {CLASS.name : CLASS,
-       CONSTRUCTOR.name : CONSTRUCTOR,
-       METHOD.name : METHOD,
-       PROPERTY.name : PROPERTY,
-       VARIABLE.name : VARIABLE});
-  }
+  static Map<String, MemberTypes> get values => const {
+    "CLASS" : CLASS,
+    "CONSTRUCTOR" : CONSTRUCTOR,
+    "METHOD" : METHOD,
+    "PROPERTY" : PROPERTY,
+    "VARIABLE" : VARIABLE};
 
   String toString() => name;
 }
