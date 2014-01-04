@@ -53,8 +53,8 @@ class _Membership {
     if(bindingAttr == null) {
       bindingAttr = BindingFlags.PUBLIC | BindingFlags.INSTANCE | BindingFlags.GET_CONSTRUCTOR;
     } else {
-      bindingAttr &= BindingFlags.PUBLIC | BindingFlags.PRIVATE | BindingFlags.INSTANCE | BindingFlags.GET_CONSTRUCTOR;
-      bindingAttr |= BindingFlags.INSTANCE | BindingFlags.GET_CONSTRUCTOR | BindingFlags.DECLARED_ONLY;
+      bindingAttr &= BindingFlags.PUBLIC | BindingFlags.PRIVATE | BindingFlags.INSTANCE | BindingFlags.GET_CONSTRUCTOR | BindingFlags.DECLARED_ONLY;
+      bindingAttr |= BindingFlags.INSTANCE | BindingFlags.GET_CONSTRUCTOR;
     }
 
     return _getMembers(owner, name, bindingAttr)[name];
@@ -64,8 +64,8 @@ class _Membership {
     if(bindingAttr == null) {
       bindingAttr = BindingFlags.PUBLIC | BindingFlags.INSTANCE | BindingFlags.GET_CONSTRUCTOR;
     } else {
-      bindingAttr &= BindingFlags.PUBLIC | BindingFlags.PRIVATE | BindingFlags.INSTANCE | BindingFlags.GET_CONSTRUCTOR;
-      bindingAttr |= BindingFlags.INSTANCE | BindingFlags.GET_CONSTRUCTOR | BindingFlags.DECLARED_ONLY;
+      bindingAttr &= BindingFlags.PUBLIC | BindingFlags.PRIVATE | BindingFlags.INSTANCE | BindingFlags.GET_CONSTRUCTOR | BindingFlags.DECLARED_ONLY;
+      bindingAttr |= BindingFlags.INSTANCE | BindingFlags.GET_CONSTRUCTOR;
     }
 
     return new Dictionary<Symbol, ConstructorInfo>.fromDictionary(_getMembers(owner, null, bindingAttr));
@@ -91,8 +91,8 @@ class _Membership {
     if(bindingAttr == null) {
       bindingAttr = BindingFlags.PUBLIC | BindingFlags.INSTANCE | BindingFlags.STATIC | BindingFlags.GET_METHOD;
     } else {
-      bindingAttr &= BindingFlags.PUBLIC | BindingFlags.PRIVATE | BindingFlags.INSTANCE | BindingFlags.STATIC | BindingFlags.GET_METHOD;
-      bindingAttr |= BindingFlags.GET_METHOD | BindingFlags.DECLARED_ONLY;
+      bindingAttr &= BindingFlags.PUBLIC | BindingFlags.PRIVATE | BindingFlags.INSTANCE | BindingFlags.STATIC | BindingFlags.GET_METHOD | BindingFlags.DECLARED_ONLY;
+      bindingAttr |= BindingFlags.GET_METHOD;
     }
 
     return _getMembers(owner, name, bindingAttr)[name];
@@ -102,8 +102,8 @@ class _Membership {
     if(bindingAttr == null) {
       bindingAttr = BindingFlags.PUBLIC | BindingFlags.INSTANCE | BindingFlags.STATIC | BindingFlags.GET_METHOD;
     } else {
-      bindingAttr &= BindingFlags.PUBLIC | BindingFlags.PRIVATE | BindingFlags.INSTANCE | BindingFlags.STATIC | BindingFlags.GET_METHOD;
-      bindingAttr |= BindingFlags.GET_METHOD | BindingFlags.DECLARED_ONLY;
+      bindingAttr &= BindingFlags.PUBLIC | BindingFlags.PRIVATE | BindingFlags.INSTANCE | BindingFlags.STATIC | BindingFlags.GET_METHOD | BindingFlags.DECLARED_ONLY;
+      bindingAttr |= BindingFlags.GET_METHOD;
     }
 
     return new Dictionary<Symbol, MethodInfo>.fromDictionary(_getMembers(owner, null, bindingAttr));
@@ -113,8 +113,8 @@ class _Membership {
     if(bindingAttr == null) {
       bindingAttr = BindingFlags.PUBLIC | BindingFlags.INSTANCE | BindingFlags.STATIC | BindingFlags.GET_PROPERTY;
     } else {
-      bindingAttr &= BindingFlags.PUBLIC | BindingFlags.PRIVATE | BindingFlags.INSTANCE | BindingFlags.STATIC | BindingFlags.GET_PROPERTY;
-      bindingAttr |= BindingFlags.GET_PROPERTY | BindingFlags.DECLARED_ONLY;
+      bindingAttr &= BindingFlags.PUBLIC | BindingFlags.PRIVATE | BindingFlags.INSTANCE | BindingFlags.STATIC | BindingFlags.GET_PROPERTY | BindingFlags.DECLARED_ONLY;
+      bindingAttr |= BindingFlags.GET_PROPERTY;
     }
 
     return _getMembers(owner, name, bindingAttr)[name];
@@ -124,8 +124,8 @@ class _Membership {
     if(bindingAttr == null) {
       bindingAttr = BindingFlags.PUBLIC | BindingFlags.INSTANCE | BindingFlags.STATIC | BindingFlags.GET_PROPERTY;
     } else {
-      bindingAttr &= BindingFlags.PUBLIC | BindingFlags.PRIVATE | BindingFlags.INSTANCE | BindingFlags.STATIC | BindingFlags.GET_PROPERTY;
-      bindingAttr |= BindingFlags.GET_PROPERTY | BindingFlags.DECLARED_ONLY;
+      bindingAttr &= BindingFlags.PUBLIC | BindingFlags.PRIVATE | BindingFlags.INSTANCE | BindingFlags.STATIC | BindingFlags.GET_PROPERTY | BindingFlags.DECLARED_ONLY;
+      bindingAttr |= BindingFlags.GET_PROPERTY;
     }
 
     return new Dictionary<Symbol, PropertyInfo>.fromDictionary(_getMembers(owner, null, bindingAttr));
@@ -135,8 +135,8 @@ class _Membership {
     if(bindingAttr == null) {
       bindingAttr = BindingFlags.PUBLIC | BindingFlags.INSTANCE | BindingFlags.STATIC | BindingFlags.GET_VARIABLE;
     } else {
-      bindingAttr &= BindingFlags.PUBLIC | BindingFlags.PRIVATE | BindingFlags.INSTANCE | BindingFlags.STATIC | BindingFlags.GET_VARIABLE;
-      bindingAttr |= BindingFlags.GET_VARIABLE | BindingFlags.DECLARED_ONLY;
+      bindingAttr &= BindingFlags.PUBLIC | BindingFlags.PRIVATE | BindingFlags.INSTANCE | BindingFlags.STATIC | BindingFlags.GET_VARIABLE | BindingFlags.DECLARED_ONLY;
+      bindingAttr |= BindingFlags.GET_VARIABLE;
     }
 
     return _getMembers(owner, name, bindingAttr)[name];
@@ -146,8 +146,8 @@ class _Membership {
     if(bindingAttr == null) {
       bindingAttr = BindingFlags.PUBLIC | BindingFlags.INSTANCE | BindingFlags.STATIC | BindingFlags.GET_VARIABLE;
     } else {
-      bindingAttr &= BindingFlags.PUBLIC | BindingFlags.PRIVATE | BindingFlags.INSTANCE | BindingFlags.STATIC | BindingFlags.GET_VARIABLE;
-      bindingAttr |= BindingFlags.GET_VARIABLE | BindingFlags.DECLARED_ONLY;
+      bindingAttr &= BindingFlags.PUBLIC | BindingFlags.PRIVATE | BindingFlags.INSTANCE | BindingFlags.STATIC | BindingFlags.GET_VARIABLE | BindingFlags.DECLARED_ONLY;
+      bindingAttr |= BindingFlags.GET_VARIABLE;
     }
 
     return new Dictionary<Symbol, VariableInfo>.fromDictionary(_getMembers(owner, null, bindingAttr));
