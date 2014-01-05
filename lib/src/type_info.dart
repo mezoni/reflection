@@ -64,7 +64,7 @@ class _TypeInfo extends _MemberInfo implements TypeInfo {
 
   static Map<Symbol, TypeInfo> _types = new Map<Symbol, TypeInfo>();
 
-  static TypeInfo _voidInfo = typeInfo(null);
+  static TypeInfo _voidInfo = new _TypeInfo.fromMirror(currentMirrorSystem().voidType);
 
   ClassMirror _classMirror;
 
