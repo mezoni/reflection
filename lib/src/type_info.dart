@@ -98,8 +98,13 @@ class _TypeInfo extends _MemberInfo implements TypeInfo {
     LibraryInfo library;
     if(mirrorOwner is LibraryMirror) {
       library = _libraries[mirrorOwner.uri];
+      _TypeInfo ti;
       if(mirror.isOriginalDeclaration) {
-        return library.types[mirror.simpleName];
+        ti = library.types[mirror.simpleName];
+      }
+
+      if(ti != null) {
+        return ti;
       }
 
       owner = library;
@@ -211,7 +216,7 @@ class _TypeInfo extends _MemberInfo implements TypeInfo {
       if(_classMirror != null) {
         var superclass = _classMirror.superclass;
         if(superclass != null) {
-          _superclass = typeInfo(_classMirror.superclass.reflectedType);
+          _superclass = typeInfo(superclass.reflectedType);
         } else {
           _flag |= _FLAG_HAS_NO_SUPERCLASS;
         }
